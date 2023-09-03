@@ -1,17 +1,12 @@
-# Chrome Extension
+# App UI
 
 ## Usage
 
-Firstly, Run `npm install` for both root directory and scripts directory
-
-- Regular nextjs scripts can be used to run extension as a web app. Run `npx http-server ./out` after build to serve static export.
-- Run `npm run build:extension` to build for chrome extension. Output will be in `./out` directory. Load output directory as unpacked extension in chrome (enable developer mode in extensions).
+- Regular nextjs scripts can be used to run application as a web app. Run `npx http-server ./out` after build to serve static export.
 
 ## Structure
 
 Created by `npx create-next-app@latest` command. Typescript, EsLint, Tailwind CSS, src/ directory, App Router added by this command.
-
-Git lfs is used for storing binary files. VS Code is used for development. Prettier is used for auto code formatting with Prettier VS Code extension.
 
 RTK Query will be used to interact with api, and its codegen package will be used to write api calls automatically from swagger.
 
@@ -23,10 +18,7 @@ RTK Query will be used to interact with api, and its codegen package will be use
 
 ### Folder Structure
 
-- extenion: chrome extension related files, output some JS files to put in extension root. Has its own package.json.
-- extension-test-app: NextJS app to test extension related features. Has its own package.json.
 - public: static files to be served directly.
-- scripts: Utility scripts to be used manually. Has its own package.json.
 - src: source files for both client and server side. More info: [`NextJS folder structure`][NextJS Folder].
   - app: app related files, layouts, pages etc.
   - pages: NextJS pages. `./src/app` is not used for now.
