@@ -1,0 +1,26 @@
+{
+  // Copied from nextjs tsconfig.json
+  "compilerOptions": {
+    "target": "es5",
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "noEmit": false, // Output to single file.
+    "esModuleInterop": true,
+    "module": "esnext",
+    "moduleResolution": "node", // Output to single file. Changed from bundler to node
+    "resolveJsonModule": true,
+    "isolatedModules": false, // Output to single file. Changed from true to false
+    "jsx": "preserve",
+    "incremental": true,
+    "paths": {
+      // Added paths
+      "@/*": ["../src/*"],
+      "@scripts/*": ["./src/*"]
+    }
+  },
+  "include": ["**/*.ts", "**/*.tsx"],
+  "exclude": ["node_modules"]
+}
