@@ -1,13 +1,16 @@
 const path = require('path');
 
 module.exports = {
-  entry: './src/index.ts',
+  entry: {
+    content: './src/content.ts',
+    background: './src/background.ts',
+  },
   mode: 'production',
   resolve: {
     extensions: ['.ts', '.js'],
   },
   output: {
-    filename: 'content.js',
+    filename: '[name].js',
     path: path.resolve(__dirname, 'out'),
   },
 };
