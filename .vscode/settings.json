@@ -4,5 +4,6 @@
   "files.associations": {
     ".env.*": "properties",
     "*.css": "tailwindcss"
-  }
+  },
+  "eslint.workingDirectories": ["./extension-ui", "./extension-test-app"]
 }
