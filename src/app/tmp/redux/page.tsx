@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 // Redux
+import { skipToken } from '@reduxjs/toolkit/query/react';
 import { useAppSelector, useAppDispatch } from '@/lib/redux/hooks';
 import {
   UserState,
@@ -15,6 +16,7 @@ import {
   asyncFuncWithData,
 } from '@/lib/redux/features/tmp/asyncSlice';
 import { useGetPokemonByNameQuery } from '@/lib/redux/features/tmp/pokemonApi/pokemonApi';
+import { useLazyGetSimplePriceQuery } from '@/lib/redux/features/tmp/coinGeckoApi/coinGeckoEndpoint';
 
 export default function Redux() {
   const userState = useAppSelector(selectUserState);
@@ -26,6 +28,17 @@ export default function Redux() {
 
   const { data, error, isLoading, isSuccess } =
     useGetPokemonByNameQuery('bulbasaur');
+
+  const pokemonName = userNameInput ? 'pikachu' : null;
+  const pokemonPikachu = useGetPokemonByNameQuery(pokemonName ?? skipToken);
+
+  const [trigger, result, lastPromiseInfo] = useLazyGetSimplePriceQuery();
+  const handleTrigger = () => {
+    trigger({
+      ids: 'ethereum',
+      vsCurrencies: 'usd',
+    });
+  };
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
@@ -77,6 +90,40 @@ export default function Redux() {
           <span>Loading...</span>
         ) : isSuccess ? (
           <h3>{data.species.name}</h3>
+        ) : (
+          <span>error: Unexpected error happened...</span>
+        )}
+      </div>
+
+      <h2 className="text-3xl font-bold">
+        Redux Query Pokemon if there is user name
+      </h2>
+      <div>
+        {pokemonPikachu.isLoading ? (
+          <span>Loading...</span>
+        ) : pokemonPikachu.isSuccess ? (
+          <h3>{pokemonPikachu.data.species.name}</h3>
+        ) : pokemonPikachu.isUninitialized ? null : (
+          <span>error: Unexpected error happened...</span>
+        )}
+      </div>
+
+      <h2 className="text-3xl font-bold">Redux Query coinGeckoApi manually</h2>
+      <div>
+        <div>
+          <button
+            className="rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700"
+            onClick={() => handleTrigger()}
+          >
+            Fetch Data Manually
+          </button>
+        </div>
+        {result.isUninitialized ? null : result.isFetching ? (
+          <span>Loading...</span>
+        ) : result.isSuccess ? (
+          <h3>
+            1 eth = {(result.data as any)?.ethereum?.usd ?? 'no data'} usd
+          </h3>
         ) : (
           <span>error: Unexpected error happened...</span>
         )}
