@@ -23,6 +23,8 @@ RTK Query will be used to interact with api, and its codegen package will be use
 
 ### Folder Structure
 
+- extenion: chrome extension related files, output some JS files to put in extension root. Has its own package.json.
+- extension-test-app: NextJS app to test extension related features. Has its own package.json.
 - public: static files to be served directly.
 - scripts: Utility scripts to be used manually. Has its own package.json.
 - src: source files for both client and server side. More info: [`NextJS folder structure`][NextJS Folder].
