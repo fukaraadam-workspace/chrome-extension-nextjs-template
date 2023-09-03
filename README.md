@@ -36,18 +36,22 @@ RTK Query will be used to interact with api, and its codegen package will be use
 
 Additional todos will be specified inside project with \<ToDo> tag.
 
-- [ ] Add Redux toolkit
-- [ ] Add RTK Query
+- [ ] Edit `./public/manifest.json`, maybe find a better way to separate extension parts from application.
+- [x] Add Redux toolkit
+- [x] Add RTK Query
 - [ ] Add RTK Query codegen
 
 **Clean Up:**
 
 - [ ] Remove unused files.
+- [ ] Remove tmp folders.
+  - [ ] Remove tmp folder from `./src/lib/redux/features/` and cleanup related redux store code.
+  - [ ] Remove tmp folder from `./src/app/`.
 
 **Through Development:**
 
 - [ ] Edit README files.
-- [ ] Edit pages in `./src/app/sitemap.ts` to include all pages and maybe edit `./src/app/robots.ts`.
+- [ ] Edit pages in `./src/app/sitemap.ts` to include all pages and maybe edit `./src/app/robots.ts` for web application.
 
 <!-- Links Used through document -->
 
