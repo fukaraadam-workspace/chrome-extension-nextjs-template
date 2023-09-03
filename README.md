@@ -39,7 +39,7 @@ Additional todos will be specified inside project with \<ToDo> tag.
 - [ ] Edit `./public/manifest.json`, maybe find a better way to separate extension parts from application.
 - [x] Add Redux toolkit
 - [x] Add RTK Query
-- [ ] Add RTK Query codegen
+- [x] Add RTK Query codegen
 
 **Clean Up:**
 
@@ -47,11 +47,11 @@ Additional todos will be specified inside project with \<ToDo> tag.
 - [ ] Remove tmp folders.
   - [ ] Remove tmp folder from `./src/lib/redux/features/` and cleanup related redux store code.
   - [ ] Remove tmp folder from `./src/app/`.
+  - [ ] Remove coinGeckoApi codegen scripts from `./scripts/src/api-codegen/apicodegen.ts` and related swaggers.
 
 **Through Development:**
 
 - [ ] Edit README files.
-- [ ] Edit pages in `./src/app/sitemap.ts` to include all pages and maybe edit `./src/app/robots.ts` for web application.
 
 <!-- Links Used through document -->
 
