@@ -5,5 +5,5 @@
     ".env.*": "properties",
     "*.css": "tailwindcss"
   },
-  "eslint.workingDirectories": ["./extension-ui", "./extension-test-app"]
+  "eslint.workingDirectories": ["./packages/app-ui", "./packages/extension-test-app"]
 }
