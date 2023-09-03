@@ -25,8 +25,9 @@ RTK Query will be used to interact with api, and its codegen package will be use
 
 - public: static files to be served directly.
 - scripts: Utility scripts to be used manually. Has its own package.json.
-- src: source files for both client and server side.
-  - app: app related files, layouts, pages etc [`NextJS folder structure`][NextJS Folder].
+- src: source files for both client and server side. More info: [`NextJS folder structure`][NextJS Folder].
+  - app: app related files, layouts, pages etc.
+  - pages: NextJS pages. `./src/app` is not used for now.
   - assets: Images, fonts, etc.
   - components: components to use in client side. Module css files, React components, etc.
   - data: static data files to be used in general. ts, JSON, CSV etc.
