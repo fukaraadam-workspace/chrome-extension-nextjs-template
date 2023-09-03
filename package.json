@@ -6,6 +6,7 @@
     "packages/*"
   ],
   "scripts": {
+    "dev": "npm run dev --workspace=extension-test-app",
     "build": "npm run build --workspaces --if-present",
     "build:extension": "npm run build --workspace=app-ui --workspace=extension-specific && npm run build-extension:ui --workspace=utility-scripts && npm run build-extension:specific --workspace=utility-scripts"
   },

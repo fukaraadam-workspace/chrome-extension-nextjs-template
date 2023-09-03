@@ -2,9 +2,12 @@
 
 ## Usage
 
-Firstly, Run `npm install`, this will install all dependencies for all workspaces.
+Run all these commands from root directory.
 
+- Firstly, Run `npm install`, this will install all dependencies for all workspaces.
 - Run `npm run build:extension` to build for chrome extension. Output will be in `./out` directory. Load output directory as unpacked extension in chrome (enable developer mode in extensions).
+- To test extension, run `npm run dev`.
+  - Open [http://localhost:3001](http://localhost:3001) with your browser to see the result. 3000 is reserved for app-ui.
 
 ## Structure
 
