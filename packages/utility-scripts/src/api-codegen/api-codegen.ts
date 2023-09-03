@@ -1,5 +1,7 @@
 import { generateEndpoints } from '@rtk-query/codegen-openapi';
 
+const uiDirectory = '../app-ui';
+
 const runAsync = async () => {
   // CoinGeckoApi
   await generateEndpoints({
@@ -8,7 +10,8 @@ const runAsync = async () => {
     apiFile: '@/lib/redux/features/tmp/coinGeckoApi/coinGeckoApi.ts',
     apiImport: 'coinGeckoApi',
     outputFile:
-      '../src/lib/redux/features/tmp/coinGeckoApi/coinGeckoEndpoint.ts',
+      uiDirectory +
+      '/src/lib/redux/features/tmp/coinGeckoApi/coinGeckoEndpoint.ts',
     exportName: 'coinGeckoApi',
     // hooks: true, // Generate query and mutation hooks, but not lazy queries
     hooks: { queries: true, lazyQueries: true, mutations: true },

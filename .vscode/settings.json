@@ -5,5 +5,9 @@
     ".env.*": "properties",
     "*.css": "tailwindcss"
   },
-  "eslint.workingDirectories": ["./packages/app-ui", "./packages/extension-test-app"]
+  "eslint.workingDirectories": [
+    "./packages/app-ui",
+    "./packages/extension-test-app"
+  ],
+  "typescript.tsdk": "node_modules\\typescript\\lib"
 }
