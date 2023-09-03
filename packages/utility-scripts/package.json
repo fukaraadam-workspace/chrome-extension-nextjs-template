@@ -1,7 +1,6 @@
 {
   "name": "utility-scripts",
   "version": "0.1.0",
-  "private": true,
   "scripts": {
     "build-extension:ui": "ts-node ./src/build-extension/build-extension-ui.ts",
     "build-extension:specific": "ts-node ./src/build-extension/build-extension-specific.ts",
