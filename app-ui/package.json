@@ -1,5 +1,5 @@
 {
-  "name": "nextjs-chrome-extension",
+  "name": "app-ui",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -25,8 +25,6 @@
     "eslint-config-next": "13.4.19",
     "eslint-config-prettier": "^9.0.0",
     "postcss": "8.4.29",
-    "prettier": "^3.0.3",
-    "prettier-plugin-tailwindcss": "^0.5.4",
     "tailwindcss": "3.3.3",
     "typescript": "5.2.2"
   }

@@ -1,15 +1,12 @@
 {
-  "name": "wallet-scripts",
-  "version": "1.0.0",
-  "description": "Utility scripts for wallet development",
-  "main": "index.ts",
+  "name": "utility-scripts",
+  "version": "0.1.0",
+  "private": true,
   "scripts": {
     "rename-next-folder": "ts-node ./src/rename-next-folder.ts",
     "copy-extension-files": "ts-node ./src/copy-extension-files.ts",
     "codegen": "ts-node ./src/api-codegen/api-codegen.ts"
   },
-  "author": "Furkan Alan",
-  "license": "ISC",
   "dependencies": {
     "@rtk-query/codegen-openapi": "^1.0.0"
   },
