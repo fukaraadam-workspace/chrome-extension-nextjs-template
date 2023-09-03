@@ -1,24 +1,40 @@
-import * as fs from 'fs';
+import * as fs from 'fs-extra';
 import * as path from 'path';
 
-const outDirectory = '../out';
-const directoryToRename = outDirectory + '/_next';
-const newDirectoryName = outDirectory + '/next';
+const uiDirectory = '../app-ui/out';
+const outDirectory = '../../out';
 
-// Rename the directory
-fs.rename(directoryToRename, newDirectoryName, (err) => {
+fs.copy(uiDirectory, outDirectory, (err) => {
   if (err) {
-    console.error('--Error renaming directory--');
+    console.error('--Error copying directory--');
     throw err;
   } else {
-    console.log(`Directory ${directoryToRename} renamed to ${newDirectoryName}`);
-    
-    // Search and replace in HTML files
-    searchAndReplaceInFiles(outDirectory, /\/_next/g, '/next');
+    console.log(`Directory ${uiDirectory} copied to ${outDirectory}`);
+
+    const directoryToRename = path.join(outDirectory, '/_next');
+    const newDirectoryName = path.join(outDirectory, '/next');
+    // Rename the directory
+    fs.rename(directoryToRename, newDirectoryName, (err) => {
+      if (err) {
+        console.error('--Error renaming directory--');
+        throw err;
+      } else {
+        console.log(
+          `Directory ${directoryToRename} renamed to ${newDirectoryName}`,
+        );
+
+        // Search and replace in HTML files
+        searchAndReplaceInFiles(outDirectory, /\/_next/g, '/next');
+      }
+    });
   }
 });
 
-function searchAndReplaceInFiles(directory: string, searchPattern: string | RegExp, replaceText: string) {
+function searchAndReplaceInFiles(
+  directory: string,
+  searchPattern: string | RegExp,
+  replaceText: string,
+) {
   fs.readdir(directory, (err, files) => {
     if (err) {
       console.error('--Error reading directory--');
@@ -46,12 +62,15 @@ function searchAndReplaceInFiles(directory: string, searchPattern: string | RegE
             }
 
             let isFoundInFile = false;
-            const updatedData = data.replaceAll(searchPattern, function (_match) {
-              isFoundInFile = true;
-              return replaceText;
-            });
+            const updatedData = data.replaceAll(
+              searchPattern,
+              function (_match) {
+                isFoundInFile = true;
+                return replaceText;
+              },
+            );
 
-            if(isFoundInFile) {
+            if (isFoundInFile) {
               fs.writeFile(filePath, updatedData, 'utf8', (writeErr) => {
                 if (writeErr) {
                   console.error('--Error writing file--');
