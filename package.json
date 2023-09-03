@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "extension-build": "npm run build && npm --prefix ./scripts/ run rename-next-folder",
+    "build:extension": "npm run build && npm --prefix ./scripts/ run rename-next-folder",
     "start": "next start",
     "lint": "next lint"
   },

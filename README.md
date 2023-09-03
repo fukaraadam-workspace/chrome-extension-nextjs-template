@@ -5,7 +5,7 @@
 Firstly, Run `npm install` for both root directory and scripts directory
 
 - Regular nextjs scripts can be used to run extension as a web app. Run `npx http-server ./out` after build to serve static export.
-- Run `extension-build` to build for chrome extension. Output will be in `./out` directory. Load output directory as unpacked extension in chrome (enable developer mode in extensions).
+- Run `npm run build:extension` to build for chrome extension. Output will be in `./out` directory. Load output directory as unpacked extension in chrome (enable developer mode in extensions).
 
 ## Structure
 
