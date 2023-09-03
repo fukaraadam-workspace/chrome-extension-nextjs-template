@@ -2,6 +2,7 @@ import { configureStore } from '@reduxjs/toolkit';
 import basicReducer from './features/tmp/basicSlice';
 import asyncReducer from './features/tmp/asyncSlice';
 import { pokemonApi } from './features/tmp/pokemonApi/pokemonApi';
+import { coinGeckoApi } from './features/tmp/coinGeckoApi/coinGeckoApi';
 // For logging errors
 import { isRejectedWithValue } from '@reduxjs/toolkit';
 import type { MiddlewareAPI, Middleware } from '@reduxjs/toolkit';
@@ -24,6 +25,7 @@ export const store = configureStore({
     basic: basicReducer,
     async: asyncReducer,
     [pokemonApi.reducerPath]: pokemonApi.reducer,
+    [coinGeckoApi.reducerPath]: coinGeckoApi.reducer,
   },
   devTools: process.env.NODE_ENV !== 'production',
   // Adding the api middleware enables caching, invalidation, polling,
@@ -31,6 +33,7 @@ export const store = configureStore({
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware()
       .concat(pokemonApi.middleware)
+      .concat(coinGeckoApi.middleware)
       .concat(rtkQueryErrorLogger),
 });
 
