@@ -13,18 +13,25 @@ fs.copy(uiDirectory, outDirectory, (err) => {
 
     const directoryToRename = path.join(outDirectory, '/_next');
     const newDirectoryName = path.join(outDirectory, '/next');
-    // Rename the directory
-    fs.rename(directoryToRename, newDirectoryName, (err) => {
+    fs.remove(newDirectoryName, (err) => {
       if (err) {
-        console.error('--Error renaming directory--');
+        console.error('--Error removing old directory--');
         throw err;
       } else {
-        console.log(
-          `Directory ${directoryToRename} renamed to ${newDirectoryName}`,
-        );
+        // Rename the directory
+        fs.rename(directoryToRename, newDirectoryName, (err) => {
+          if (err) {
+            console.error('--Error renaming directory--');
+            throw err;
+          } else {
+            console.log(
+              `Directory ${directoryToRename} renamed to ${newDirectoryName}`,
+            );
 
-        // Search and replace in HTML files
-        searchAndReplaceInFiles(outDirectory, /\/_next/g, '/next');
+            // Search and replace in HTML files
+            searchAndReplaceInFiles(outDirectory, /\/_next/g, '/next');
+          }
+        });
       }
     });
   }
