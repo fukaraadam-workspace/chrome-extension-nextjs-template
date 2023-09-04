@@ -12,3 +12,19 @@ window.addEventListener('click', function (event) {
     console.log(response);
   });
 });
+
+function extMessageHandler(
+  msg: any,
+  sender: chrome.runtime.MessageSender,
+  sendResponse: (response?: any) => void,
+) {
+  msg.type;
+  if (msg.type === 'message-appUi') {
+    msg.type;
+    console.log('---Message from appUi---');
+    console.log('Message: ', msg.data);
+    sendResponse({ data: 'ok' });
+  }
+}
+
+chrome.runtime.onMessage.addListener(extMessageHandler);
