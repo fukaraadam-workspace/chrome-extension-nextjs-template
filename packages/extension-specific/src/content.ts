@@ -13,17 +13,41 @@ window.addEventListener('click', function (event) {
   });
 });
 
+export enum MessageType {
+  AppUi = 'message-appUi',
+  General = 'message-general',
+}
+
+type ExtensionRequestMap = {
+  [MessageType.AppUi]: {
+    data: string;
+  };
+  [MessageType.General]: {
+    data: number;
+  };
+};
+
+export type ExtensionRequest<T extends MessageType> = {
+  type: T;
+} & ExtensionRequestMap[T];
+
+type ExtensionResponseMap = {
+  [MessageType.AppUi]: { data: 'ok' };
+  [MessageType.General]: { data: 'nine' };
+};
+
+export type ExtensionResponse<T extends MessageType> = ExtensionResponseMap[T];
+
 function extMessageHandler(
-  msg: any,
+  msg: ExtensionRequest<MessageType>,
   sender: chrome.runtime.MessageSender,
   sendResponse: (response?: any) => void,
 ) {
-  msg.type;
-  if (msg.type === 'message-appUi') {
-    msg.type;
-    console.log('---Message from appUi---');
-    console.log('Message: ', msg.data);
-    sendResponse({ data: 'ok' });
+  if (msg.type === MessageType.AppUi) {
+    const response: ExtensionResponse<typeof msg.type> = {
+      data: 'ok',
+    };
+    sendResponse(response);
   }
 }
 
