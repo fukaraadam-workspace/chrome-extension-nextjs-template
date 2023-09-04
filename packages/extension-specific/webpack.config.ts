@@ -12,6 +12,24 @@ module.exports = {
   resolve: {
     extensions: ['.ts', '.js'],
   },
+  module: {
+    rules: [
+      {
+        test: /\.(ts|tsx)$/,
+        use: [
+          {
+            loader: 'ts-loader',
+            options: {
+              compilerOptions: {
+                noEmit: false,
+              },
+            },
+          },
+        ],
+        exclude: /node_modules/,
+      },
+    ],
+  },
   plugins: [
     new CleanWebpackPlugin({ verbose: false }),
     new webpack.ProgressPlugin(),

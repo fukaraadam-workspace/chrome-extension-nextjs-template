@@ -2,7 +2,10 @@
   "name": "Next JS Chrome Extension",
   "description": "Next.js Chrome Extension starter",
   "manifest_version": 3,
-  "action": {},
+  "action": {
+    "default_title": "Next.js Chrome Extension App",
+    "default_popup": "index.html"
+  },
   "content_scripts": [
     {
       "matches": ["<all_urls>"],
@@ -11,6 +14,5 @@
   ],
   "background": {
     "service_worker": "background.js"
-  },
-  "permissions": ["activeTab", "scripting"]
+  }
 }
