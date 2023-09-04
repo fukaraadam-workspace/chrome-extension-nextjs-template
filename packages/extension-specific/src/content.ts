@@ -23,7 +23,7 @@ type ExtensionRequestMap = {
     data: string;
   };
   [MessageType.General]: {
-    data: number;
+    [key: string]: any;
   };
 };
 
@@ -33,7 +33,7 @@ export type ExtensionRequest<T extends MessageType> = {
 
 type ExtensionResponseMap = {
   [MessageType.AppUi]: { data: 'ok' };
-  [MessageType.General]: { data: 'nine' };
+  [MessageType.General]: undefined;
 };
 
 export type ExtensionResponse<T extends MessageType> = ExtensionResponseMap[T];
@@ -48,6 +48,10 @@ function extMessageHandler(
       data: 'ok',
     };
     sendResponse(response);
+  } else {
+    console.log('--General message recieved--');
+    console.log(msg);
+    const response: ExtensionResponse<typeof msg.type> = undefined;
   }
 }
 
