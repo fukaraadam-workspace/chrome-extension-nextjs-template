@@ -7,5 +7,8 @@ console.log(generate());
 window.addEventListener('click', function (event) {
   console.log('Page Clicked! Running from content script: ');
   console.log(event);
-  chrome.runtime.sendMessage({ ...event, type: 'click' });
+  chrome.runtime.sendMessage({ ...event, type: 'click' }, (response) => {
+    console.log('Response from background script: ');
+    console.log(response);
+  });
 });

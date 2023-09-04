@@ -11,6 +11,7 @@ const extMessageHandler = (
   if (msg.type === 'click') {
     console.log('Page Clicked! Running from background script: ');
     console.log('Send from tab with url: ', sender.tab?.url);
+    sendResponse({ ...msg, type: 'click-response' });
   }
 };
 
