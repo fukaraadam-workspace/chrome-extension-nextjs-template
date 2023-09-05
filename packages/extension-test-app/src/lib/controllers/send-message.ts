@@ -1,4 +1,4 @@
-import { PageEventType } from '@extension/content';
+import { PageEventType } from 'extension-specific';
 
 export async function triggerCustomEvent(window: Window) {
   const event = new Event(PageEventType.CustomClick);
