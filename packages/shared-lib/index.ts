@@ -21,9 +21,7 @@ type CNRequestMap = {
   [CNMessageType.AppUi]: {
     data: string;
   };
-  [CNMessageType.General]: {
-    [key: string]: any;
-  };
+  [CNMessageType.General]: any;
 };
 
 export type CNRequest<T extends CNMessageType> = {
@@ -49,12 +47,8 @@ export enum BGMessageType {
 }
 
 type BGRequestMap = {
-  [BGMessageType.PageClick]: {
-    data: string;
-  };
-  [BGMessageType.CustomClick]: {
-    [key: string]: any;
-  };
+  [BGMessageType.PageClick]: WindowEventMap[PageEventType.PageClick];
+  [BGMessageType.CustomClick]: Event;
 };
 
 export type BGRequest<T extends BGMessageType> = {
@@ -62,8 +56,8 @@ export type BGRequest<T extends BGMessageType> = {
 } & BGRequestMap[T];
 
 type BGResponseMap = {
-  [BGMessageType.PageClick]: { data: 'ok' };
-  [BGMessageType.CustomClick]: undefined;
+  [BGMessageType.PageClick]: undefined;
+  [BGMessageType.CustomClick]: { data: 'ok' };
 };
 
 export type BGResponse<T extends BGMessageType> = BGResponseMap[T];

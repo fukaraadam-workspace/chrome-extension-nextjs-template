@@ -1,10 +1,9 @@
-import { generate } from 'random-words';
 import { PageEventType, CNMessageType } from 'shared-lib';
 import type { CNRequest, CNResponse } from 'shared-lib';
 import { BGMessageType } from 'shared-lib';
+import type { BGRequest, BGResponse } from 'shared-lib';
 
-console.log('Content script loaded! Generating random words...');
-console.log(generate());
+console.log('Content script loaded!');
 
 /**
  * Proxy for events from page
@@ -13,28 +12,22 @@ console.log(generate());
 
 // Listen for a regular event.
 window.addEventListener(PageEventType.PageClick, function (event) {
-  console.log('Page Clicked! Running from content script: ');
-  console.log(event);
-  chrome.runtime.sendMessage(
-    { ...event, type: BGMessageType.PageClick },
-    (response) => {
-      console.log('Response from background script: ');
-      console.log(response);
-    },
-  );
+  chrome.runtime.sendMessage<
+    BGRequest<BGMessageType.PageClick>,
+    BGResponse<BGMessageType.PageClick>
+  >({ ...event, type: BGMessageType.PageClick });
 });
 
 // Listen for a custom event.
 window.addEventListener(PageEventType.CustomClick, function (event) {
-  console.log('Button Clicked! Running from content script: ');
-  console.log(event);
-  chrome.runtime.sendMessage(
-    { ...event, type: BGMessageType.CustomClick },
-    (response) => {
-      console.log('Response from background script: ');
-      console.log(response);
-    },
-  );
+  chrome.runtime.sendMessage<
+    BGRequest<BGMessageType.CustomClick>,
+    BGResponse<BGMessageType.CustomClick>
+  >({ ...event, type: BGMessageType.CustomClick }, (response) => {
+    console.log(
+      `Background script responded to custom click with: ${response.data}`,
+    );
+  });
 });
 
 /**
@@ -44,7 +37,7 @@ window.addEventListener(PageEventType.CustomClick, function (event) {
 function extMessageHandler(
   msg: CNRequest<CNMessageType>,
   sender: chrome.runtime.MessageSender,
-  sendResponse: (response?: any) => void,
+  sendResponse: (response?: CNResponse<CNMessageType>) => void,
 ) {
   if (msg.type === CNMessageType.AppUi) {
     const response: CNResponse<typeof msg.type> = {
@@ -52,7 +45,7 @@ function extMessageHandler(
     };
     sendResponse(response);
   } else {
-    console.log('--General message recieved--');
+    console.log('Followin general message recieved!');
     console.log(msg);
     const response: CNResponse<typeof msg.type> = undefined;
   }

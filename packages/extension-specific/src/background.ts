@@ -1,9 +1,7 @@
-import { generate } from 'random-words';
 import { BGMessageType } from 'shared-lib';
 import type { BGRequest, BGResponse } from 'shared-lib';
 
-console.log('Background script loaded! Generating random words...');
-console.log(generate());
+console.log('Background script loaded!');
 
 /**
  * Listener for runtime.onMessage
@@ -15,17 +13,14 @@ const extMessageHandler = (
   sendResponse: (response?: any) => void,
 ) => {
   if (msg.type === BGMessageType.PageClick) {
-    console.log('Page Clicked! Running from background script: ');
-    console.log('Send from tab with url: ', sender.tab?.url);
+    console.log(`Page Clicked from ${sender.tab?.url}!`);
+    const response: BGResponse<typeof msg.type> = undefined;
+  } else {
+    console.log('Button Clicked from test app! Responsing now...');
     const response: BGResponse<typeof msg.type> = {
       data: 'ok',
     };
     sendResponse(response);
-  } else {
-    console.log('--General message recieved--');
-    console.log(msg);
-    console.log('Send from tab with url: ', sender.tab?.url);
-    const response: BGResponse<typeof msg.type> = undefined;
   }
 };
 
