@@ -4,6 +4,7 @@
 export enum PageEventType {
   PageClick = 'click',
   CustomClick = 'custom-click',
+  AskConfirmation = 'ask-confirmation',
 }
 
 /**
@@ -44,11 +45,13 @@ export type CNResponse<T extends CNMessageType> = CNResponseMap[T];
 export enum BGMessageType {
   PageClick = 'background-page-click',
   CustomClick = 'background-custom-click',
+  AskConfirmation = 'background-ask-confirmation',
 }
 
 type BGRequestMap = {
   [BGMessageType.PageClick]: WindowEventMap[PageEventType.PageClick];
   [BGMessageType.CustomClick]: Event;
+  [BGMessageType.AskConfirmation]: Event;
 };
 
 export type BGRequest<T extends BGMessageType> = {
@@ -58,6 +61,7 @@ export type BGRequest<T extends BGMessageType> = {
 type BGResponseMap = {
   [BGMessageType.PageClick]: undefined;
   [BGMessageType.CustomClick]: { data: 'ok' };
+  [BGMessageType.AskConfirmation]: { data: 'accepted' | 'rejected' };
 };
 
 export type BGResponse<T extends BGMessageType> = BGResponseMap[T];

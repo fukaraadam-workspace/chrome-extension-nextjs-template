@@ -15,12 +15,20 @@ const extMessageHandler = (
   if (msg.type === BGMessageType.PageClick) {
     console.log(`Page Clicked from ${sender.tab?.url}!`);
     const response: BGResponse<typeof msg.type> = undefined;
-  } else {
+  } else if (msg.type === BGMessageType.CustomClick) {
     console.log('Button Clicked from test app! Responsing now...');
     const response: BGResponse<typeof msg.type> = {
       data: 'ok',
     };
     sendResponse(response);
+  } else if (msg.type === BGMessageType.AskConfirmation) {
+    console.log('Asking for confirmation from test app! Responsing now...');
+    const response: BGResponse<typeof msg.type> = {
+      data: 'accepted',
+    };
+    sendResponse(response);
+  } else {
+    // <Warning> Don't use here, or it will capture unrelated messages
   }
 };
 

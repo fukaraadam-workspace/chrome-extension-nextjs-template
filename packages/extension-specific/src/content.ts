@@ -30,6 +30,18 @@ window.addEventListener(PageEventType.CustomClick, function (event) {
   });
 });
 
+// Listen for a custom event.
+window.addEventListener(PageEventType.AskConfirmation, function (event) {
+  chrome.runtime.sendMessage<
+    BGRequest<BGMessageType.AskConfirmation>,
+    BGResponse<BGMessageType.AskConfirmation>
+  >({ ...event, type: BGMessageType.AskConfirmation }, (response) => {
+    console.log(
+      `Background script responded to custom click with: ${response.data}`,
+    );
+  });
+});
+
 /**
  * Listener for runtime.onMessage
  * Generally used by background or AppUi
@@ -44,10 +56,12 @@ function extMessageHandler(
       data: 'ok',
     };
     sendResponse(response);
-  } else {
+  } else if (msg.type === CNMessageType.General) {
     console.log('Followin general message recieved!');
     console.log(msg);
     const response: CNResponse<typeof msg.type> = undefined;
+  } else {
+    // <Warning> Don't use here, or it will capture unrelated messages
   }
 }
 

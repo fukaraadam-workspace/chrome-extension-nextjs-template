@@ -8,6 +8,10 @@ export default function Home() {
   const TriggerEventHandler = async () => {
     await triggerCustomEvent(window);
   };
+
+  const TriggerConfirmationHandler = async () => {
+    await triggerConfirmation(window);
+  };
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
       <div className="z-10 max-w-5xl w-full items-center justify-between font-mono text-sm lg:flex">
@@ -40,6 +44,12 @@ export default function Home() {
           className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded my-2"
         >
           Trigger Custom Event
+        </button>
+        <button
+          onClick={TriggerConfirmationHandler}
+          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded my-2"
+        >
+          Ask Confirmation To Extension
         </button>
       </div>
 
