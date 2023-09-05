@@ -17,8 +17,7 @@
     "incremental": true,
     "paths": {
       // Added paths
-      "@/*": ["../src/*"],
-      "@scripts/*": ["./src/*"]
+      "@/*": ["./src/*"]
     }
   },
   "include": ["**/*.ts", "**/*.tsx"],

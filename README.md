@@ -26,3 +26,8 @@ Git lfs is used for storing binary files. VS Code is used for development. Prett
   - extenion-specific: chrome extension specific files e.g. worker scripts and manifest.json.
   - extension-test-app: NextJS app to test extension related features.
   - utility-scripts: Utility scripts to be used manually.
+
+## ToDos
+
+Additional todos will be specified inside project with \<ToDo> tag.
+\<Warning> tags should be handled carefully. Implies a bug or security issue.
