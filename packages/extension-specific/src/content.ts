@@ -1,5 +1,7 @@
 import { generate } from 'random-words';
-import { BGMessageType } from './background';
+import { PageEventType, CNMessageType } from 'shared-lib';
+import type { CNRequest, CNResponse } from 'shared-lib';
+import { BGMessageType } from 'shared-lib';
 
 console.log('Content script loaded! Generating random words...');
 console.log(generate());
@@ -8,12 +10,6 @@ console.log(generate());
  * Proxy for events from page
  * Generally used to detect events from page and trigger a background script
  */
-
-// Otherwise, the message will be sent to both content and background.s
-export enum PageEventType {
-  PageClick = 'click',
-  CustomClick = 'custom-click',
-}
 
 // Listen for a regular event.
 window.addEventListener(PageEventType.PageClick, function (event) {
@@ -45,34 +41,6 @@ window.addEventListener(PageEventType.CustomClick, function (event) {
  * Listener for runtime.onMessage
  * Generally used by background or AppUi
  */
-
-// <WARNING> MessageType in content and background shouldn't have the same string.
-// Otherwise, the message will be sent to both content and background.s
-export enum CNMessageType {
-  AppUi = 'content-appUi',
-  General = 'content-general',
-}
-
-type CNRequestMap = {
-  [CNMessageType.AppUi]: {
-    data: string;
-  };
-  [CNMessageType.General]: {
-    [key: string]: any;
-  };
-};
-
-export type CNRequest<T extends CNMessageType> = {
-  type: T;
-} & CNRequestMap[T];
-
-type CNResponseMap = {
-  [CNMessageType.AppUi]: { data: 'ok' };
-  [CNMessageType.General]: undefined;
-};
-
-export type CNResponse<T extends CNMessageType> = CNResponseMap[T];
-
 function extMessageHandler(
   msg: CNRequest<CNMessageType>,
   sender: chrome.runtime.MessageSender,

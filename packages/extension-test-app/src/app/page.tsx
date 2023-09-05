@@ -1,3 +1,5 @@
+'use client';
+
 import Image from 'next/image';
 // Controllers
 import { triggerCustomEvent } from '@/lib/controllers/send-message';

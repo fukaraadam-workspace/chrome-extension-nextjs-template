@@ -13,6 +13,9 @@ const nextConfig = {
 
   // Optional: Change the output directory `out` -> `dist`
   // distDir: 'dist',
+
+  // Optional: Import packages from workspace
+  transpilePackages: ['shared-lib'],
 };
 
 module.exports = nextConfig;

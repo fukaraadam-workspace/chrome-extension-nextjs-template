@@ -1,5 +1,5 @@
-import type { CNRequest, CNResponse } from 'extension-specific';
-import { CNMessageType } from 'extension-specific';
+import type { CNRequest, CNResponse } from 'shared-lib';
+import { CNMessageType } from 'shared-lib';
 
 export async function sendMessage(data: string) {
   const resp = await sendMessageToExtension({

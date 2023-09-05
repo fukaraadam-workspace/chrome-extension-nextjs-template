@@ -1,4 +1,6 @@
 import { generate } from 'random-words';
+import { BGMessageType } from 'shared-lib';
+import type { BGRequest, BGResponse } from 'shared-lib';
 
 console.log('Background script loaded! Generating random words...');
 console.log(generate());
@@ -7,34 +9,6 @@ console.log(generate());
  * Listener for runtime.onMessage
  * Generally used by content script
  */
-
-// <WARNING> MessageType in content and background shouldn't have the same string.
-// Otherwise, the message will be sent to both content and background.
-export enum BGMessageType {
-  PageClick = 'background-page-click',
-  CustomClick = 'background-custom-click',
-}
-
-type BGRequestMap = {
-  [BGMessageType.PageClick]: {
-    data: string;
-  };
-  [BGMessageType.CustomClick]: {
-    [key: string]: any;
-  };
-};
-
-export type BGRequest<T extends BGMessageType> = {
-  type: T;
-} & BGRequestMap[T];
-
-type BGResponseMap = {
-  [BGMessageType.PageClick]: { data: 'ok' };
-  [BGMessageType.CustomClick]: undefined;
-};
-
-export type BGResponse<T extends BGMessageType> = BGResponseMap[T];
-
 const extMessageHandler = (
   msg: BGRequest<BGMessageType>,
   sender: chrome.runtime.MessageSender,
