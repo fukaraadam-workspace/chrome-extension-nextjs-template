@@ -2,7 +2,7 @@ import type { CNRequest, CNResponse } from 'shared-lib';
 import { CNMessageType } from 'shared-lib';
 
 export async function sendMessage(data: string) {
-  const resp = await sendMessageToExtension({
+  const resp = await sendMessageToExtension<CNMessageType.AppUi>({
     type: CNMessageType.AppUi,
     data,
   });
