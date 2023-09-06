@@ -2,7 +2,10 @@
 
 import Image from 'next/image';
 // Controllers
-import { triggerCustomEvent } from '@/lib/controllers/send-message';
+import {
+  triggerCustomEvent,
+  triggerConfirmation,
+} from '@/lib/controllers/send-message';
 
 export default function Home() {
   const TriggerEventHandler = async () => {
