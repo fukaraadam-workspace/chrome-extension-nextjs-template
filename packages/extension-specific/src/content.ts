@@ -47,17 +47,16 @@ window.addEventListener(PageEventType.AskConfirmation, function (event) {
 function extMessageHandler(
   msg: CNRequest<CNMessageType>,
   sender: chrome.runtime.MessageSender,
-  sendResponse: (response?: CNResponse<CNMessageType>) => void,
+  sendResponse: <T extends CNMessageType>(response?: CNResponse<T>) => void,
 ) {
   if (msg.type === CNMessageType.AppUi) {
-    const response: CNResponse<typeof msg.type> = {
+    sendResponse<typeof msg.type>({
       data: 'ok',
-    };
-    sendResponse(response);
+    });
   } else if (msg.type === CNMessageType.General) {
-    console.log('Followin general message recieved!');
+    console.log('Following general message recieved!');
     console.log(msg);
-    const response: CNResponse<typeof msg.type> = undefined;
+    sendResponse<typeof msg.type>();
   } else {
     // <Warning> Don't use here, or it will capture unrelated messages
   }
