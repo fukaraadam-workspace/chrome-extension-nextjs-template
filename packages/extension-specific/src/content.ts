@@ -1,7 +1,5 @@
-import { PageEventType, CNMessageType } from 'shared-lib';
-import type { CNRequest, CNResponse } from 'shared-lib';
-import { BGMessageType } from 'shared-lib';
-import type { BGRequest, BGResponse } from 'shared-lib';
+import { PageEventType, CNMessageType, BGMessageType } from 'shared-lib';
+import type { CNRequest, CNResponse, BGRequest, BGResponse } from 'shared-lib';
 
 console.log('Content script loaded!');
 

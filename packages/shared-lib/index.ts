@@ -7,6 +7,28 @@ export enum PageEventType {
   AskConfirmation = 'ask-confirmation',
 }
 
+type PageRequestMap = {
+  [PageEventType.PageClick]: WindowEventMap[PageEventType.PageClick];
+  [PageEventType.CustomClick]: Event;
+  [PageEventType.AskConfirmation]: CustomEvent<{ question: string }>;
+};
+export type PageRequest<T extends PageEventType> = PageRequestMap[T];
+
+declare global {
+  interface Window {
+    //adds definition to Window, but you can do the same with HTMLElement
+    addEventListener<K extends PageEventType>(
+      type: K,
+      listener: (
+        this: Window,
+        listener: PageRequest<K>,
+        options?: boolean | AddEventListenerOptions,
+      ) => void,
+    ): void;
+    dispatchEvent<K extends PageEventType>(ev: PageRequest<K>): boolean;
+  }
+}
+
 /**
  * Types for communication with content script.
  *
@@ -49,9 +71,9 @@ export enum BGMessageType {
 }
 
 type BGRequestMap = {
-  [BGMessageType.PageClick]: WindowEventMap[PageEventType.PageClick];
-  [BGMessageType.CustomClick]: Event;
-  [BGMessageType.AskConfirmation]: Event;
+  [BGMessageType.PageClick]: PageRequestMap[PageEventType.PageClick];
+  [BGMessageType.CustomClick]: PageRequestMap[PageEventType.CustomClick];
+  [BGMessageType.AskConfirmation]: PageRequestMap[PageEventType.AskConfirmation];
 };
 
 export type BGRequest<T extends BGMessageType> = {
