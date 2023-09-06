@@ -1,6 +1,7 @@
 {
   "name": "shared-lib",
   "version": "0.1.0",
-  "dependencies": {},
-  "devDependencies": {}
+  "devDependencies": {
+    "@types/chrome": "^0.0.245"
+  }
 }

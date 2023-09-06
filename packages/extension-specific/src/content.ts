@@ -10,34 +10,34 @@ console.log('Content script loaded!');
 
 // Listen for a regular event.
 window.addEventListener(PageEventType.PageClick, function (event) {
-  chrome.runtime.sendMessage<
-    BGRequest<BGMessageType.PageClick>,
-    BGResponse<BGMessageType.PageClick>
-  >({ ...event, type: BGMessageType.PageClick });
+  chrome.runtime.sendMessage<BGMessageType.PageClick>({
+    ...event,
+    type: BGMessageType.PageClick,
+  });
 });
 
 // Listen for a custom event.
 window.addEventListener(PageEventType.CustomClick, function (event) {
-  chrome.runtime.sendMessage<
-    BGRequest<BGMessageType.CustomClick>,
-    BGResponse<BGMessageType.CustomClick>
-  >({ ...event, type: BGMessageType.CustomClick }, (response) => {
-    console.log(
-      `Background script responded to custom click with: ${response.data}`,
-    );
-  });
+  chrome.runtime.sendMessage<BGMessageType.CustomClick>(
+    { ...event, type: BGMessageType.CustomClick },
+    (response) => {
+      console.log(
+        `Background script responded to custom click with: ${response.data}`,
+      );
+    },
+  );
 });
 
 // Listen for a custom event.
 window.addEventListener(PageEventType.AskConfirmation, function (event) {
-  chrome.runtime.sendMessage<
-    BGRequest<BGMessageType.AskConfirmation>,
-    BGResponse<BGMessageType.AskConfirmation>
-  >({ ...event, type: BGMessageType.AskConfirmation }, (response) => {
-    console.log(
-      `Background script responded to custom click with: ${response.data}`,
-    );
-  });
+  chrome.runtime.sendMessage<BGMessageType.AskConfirmation>(
+    { ...event, type: BGMessageType.AskConfirmation },
+    (response) => {
+      console.log(
+        `Background script responded to custom click with: ${response.data}`,
+      );
+    },
+  );
 });
 
 /**

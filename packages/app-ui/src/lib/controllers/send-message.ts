@@ -1,21 +1,15 @@
-import type { CNRequest, CNResponse } from 'shared-lib';
 import { CNMessageType } from 'shared-lib';
 
 export async function sendMessage(data: string) {
-  const resp = await sendMessageToExtension<CNMessageType.AppUi>({
-    type: CNMessageType.AppUi,
-    data,
-  });
+  // <ToDo> Add mockup if not in extension mode
+  const resp = await sendMessageToExtension(data);
   return resp;
 }
 
-export async function sendMessageToExtension<T extends CNMessageType>(
-  msg: CNRequest<T>,
-) {
+export async function sendMessageToExtension(data: string) {
   const tabs = await chrome.tabs.query({ active: true, currentWindow: true });
-  const response = await chrome.tabs.sendMessage<CNRequest<T>, CNResponse<T>>(
-    tabs[0].id!,
-    msg,
-  );
-  return response;
+  return await chrome.tabs.sendMessage<CNMessageType.AppUi>(tabs[0].id!, {
+    type: CNMessageType.AppUi,
+    data,
+  });
 }
