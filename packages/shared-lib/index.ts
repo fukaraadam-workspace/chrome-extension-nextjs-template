@@ -20,7 +20,7 @@ type PageRequestMap = {
     type: typeof PageEventType.AskConfirmation;
   } & Omit<CustomEvent<{ question: string }>, 'type'>;
 };
-export type PageRequest = PageRequestMap[keyof PageRequestMap];
+type PageRequest = PageRequestMap[keyof PageRequestMap];
 
 /**
  * Types for communication with background script.
@@ -30,19 +30,12 @@ export type PageRequest = PageRequestMap[keyof PageRequestMap];
  * Otherwise, the message will be sent to both content and background.
  */
 export const BGMessageType = PageEventType;
-export type BGMessageType = PageEventType;
-
-type BGRequestMap = PageRequestMap;
 export type BGRequest = PageRequest;
-
 export type BGResponseMap = {
   [BGMessageType.PageClick]: undefined;
   [BGMessageType.CustomClick]: { data: 'ok' };
   [BGMessageType.AskConfirmation]: { data: 'accepted' | 'rejected' };
 };
-
-// export type BGResponse<K extends BGRequest> = BGResponseMap[K['type']];
-export type BGResponse = BGResponseMap[keyof BGResponseMap];
 
 /**
  * Types for communication with content script.
@@ -55,7 +48,6 @@ export const CNMessageType = {
   AppUi: 'content-appUi',
   General: 'content-general',
 } as const;
-export type CNMessageType = (typeof CNMessageType)[keyof typeof CNMessageType];
 
 type CNRequestMap = {
   [CNMessageType.AppUi]: {
@@ -73,9 +65,6 @@ export type CNResponseMap = {
   [CNMessageType.AppUi]: { data: 'ok' };
   [CNMessageType.General]: undefined;
 };
-
-// export type CNResponse<K extends CNRequest> = CNResponseMap[K['type']];
-export type CNResponse = CNResponseMap[keyof CNRequestMap];
 
 declare global {
   interface Window {

@@ -38,7 +38,7 @@ window.addEventListener(PageEventType.AskConfirmation, function (event) {
 function extMessageHandler(
   msg: CNRequest,
   sender: chrome.runtime.MessageSender,
-  sendResponse: <T extends CNMessageType>(response: CNResponseMap[T]) => void,
+  sendResponse: <T extends typeof msg.type>(response: CNResponseMap[T]) => void,
 ) {
   if (msg.type === CNMessageType.AppUi) {
     sendResponse<typeof msg.type>({

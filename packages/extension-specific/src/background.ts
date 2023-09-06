@@ -10,7 +10,9 @@ console.log('Background script loaded!');
 const extMessageHandler = (
   msg: BGRequest,
   sender: chrome.runtime.MessageSender,
-  sendResponse: <T extends BGMessageType>(response?: BGResponseMap[T]) => void,
+  sendResponse: <T extends typeof msg.type>(
+    response?: BGResponseMap[T],
+  ) => void,
 ) => {
   if (msg.type === BGMessageType.PageClick) {
     console.log(`Page Clicked from ${sender.tab?.url}!`);
