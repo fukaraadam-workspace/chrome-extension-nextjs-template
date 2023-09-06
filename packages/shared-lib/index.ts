@@ -15,38 +15,6 @@ type PageRequestMap = {
 };
 export type PageRequest<T extends PageEventType> = PageRequestMap[T];
 
-declare global {
-  interface Window {
-    //adds definition to Window, but you can do the same with HTMLElement
-    addEventListener<K extends PageEventType>(
-      type: K,
-      listener: (
-        this: Window,
-        listener: PageRequest<K>,
-        options?: boolean | AddEventListenerOptions,
-      ) => void,
-    ): void;
-    dispatchEvent<K extends PageEventType>(ev: PageRequest<K>): boolean;
-  }
-
-  namespace chrome.tabs {
-    export function sendMessage<T extends CNMessageType>(
-      tabId: number,
-      message: CNRequest<T>,
-    ): Promise<CNResponse<T>>;
-  }
-
-  namespace chrome.runtime {
-    export function sendMessage<T extends BGMessageType>(
-      message: BGRequest<T>,
-    ): Promise<BGResponse<T>>;
-    export function sendMessage<T extends BGMessageType>(
-      message: BGRequest<T>,
-      responseCallback: (response: BGResponse<T>) => void,
-    ): void;
-  }
-}
-
 /**
  * Types for communication with background script.
  * Generally used by content script.
@@ -107,3 +75,35 @@ type CNResponseMap = {
 };
 
 export type CNResponse<T extends CNMessageType> = CNResponseMap[T];
+
+declare global {
+  interface Window {
+    //adds definition to Window, but you can do the same with HTMLElement
+    addEventListener<K extends PageEventType>(
+      type: K,
+      listener: (
+        this: Window,
+        listener: PageRequest<K>,
+        options?: boolean | AddEventListenerOptions,
+      ) => void,
+    ): void;
+    dispatchEvent<K extends PageEventType>(ev: PageRequest<K>): boolean;
+  }
+
+  namespace chrome.tabs {
+    export function sendMessage<T extends CNMessageType>(
+      tabId: number,
+      message: CNRequest<T>,
+    ): Promise<CNResponse<T>>;
+  }
+
+  namespace chrome.runtime {
+    export function sendMessage<T extends BGMessageType>(
+      message: BGRequest<T>,
+    ): Promise<BGResponse<T>>;
+    export function sendMessage<T extends BGMessageType>(
+      message: BGRequest<T>,
+      responseCallback: (response: BGResponse<T>) => void,
+    ): void;
+  }
+}

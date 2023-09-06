@@ -34,7 +34,7 @@ window.addEventListener(PageEventType.AskConfirmation, function (event) {
     { ...event, type: BGMessageType.AskConfirmation },
     (response) => {
       console.log(
-        `Background script responded to custom click with: ${response.data}`,
+        `Background script responded to confirmation with: ${response.data}`,
       );
     },
   );
