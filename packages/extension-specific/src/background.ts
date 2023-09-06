@@ -1,5 +1,5 @@
 import { BGMessageType } from 'shared-lib';
-import type { BGRequest, BGResponse } from 'shared-lib';
+import type { BGRequest, BGResponseMap } from 'shared-lib';
 
 console.log('Background script loaded!');
 
@@ -8,9 +8,9 @@ console.log('Background script loaded!');
  * Generally used by content script
  */
 const extMessageHandler = (
-  msg: BGRequest<BGMessageType>,
+  msg: BGRequest,
   sender: chrome.runtime.MessageSender,
-  sendResponse: <T extends BGMessageType>(response?: BGResponse<T>) => void,
+  sendResponse: <T extends BGMessageType>(response?: BGResponseMap[T]) => void,
 ) => {
   if (msg.type === BGMessageType.PageClick) {
     console.log(`Page Clicked from ${sender.tab?.url}!`);

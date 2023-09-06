@@ -2,18 +2,25 @@
  * Page Events, consumed by content script.
  * Generally proxied to background script.
  */
-export enum PageEventType {
-  PageClick = 'click',
-  CustomClick = 'custom-click',
-  AskConfirmation = 'ask-confirmation',
-}
+export const PageEventType = {
+  PageClick: 'click',
+  CustomClick: 'custom-click',
+  AskConfirmation: 'ask-confirmation',
+} as const;
+type PageEventType = (typeof PageEventType)[keyof typeof PageEventType];
 
 type PageRequestMap = {
-  [PageEventType.PageClick]: WindowEventMap[PageEventType.PageClick];
-  [PageEventType.CustomClick]: Event;
-  [PageEventType.AskConfirmation]: CustomEvent<{ question: string }>;
+  [PageEventType.PageClick]: {
+    type: typeof PageEventType.PageClick;
+  } & Omit<WindowEventMap[typeof PageEventType.PageClick], 'type'>;
+  [PageEventType.CustomClick]: {
+    type: typeof PageEventType.CustomClick;
+  } & Omit<Event, 'type'>;
+  [PageEventType.AskConfirmation]: {
+    type: typeof PageEventType.AskConfirmation;
+  } & Omit<CustomEvent<{ question: string }>, 'type'>;
 };
-export type PageRequest<T extends PageEventType> = PageRequestMap[T];
+export type PageRequest = PageRequestMap[keyof PageRequestMap];
 
 /**
  * Types for communication with background script.
@@ -22,29 +29,20 @@ export type PageRequest<T extends PageEventType> = PageRequestMap[T];
  * <WARNING> MessageType in content and background shouldn't have the same string.
  * Otherwise, the message will be sent to both content and background.
  */
-export enum BGMessageType {
-  PageClick = 'background-page-click',
-  CustomClick = 'background-custom-click',
-  AskConfirmation = 'background-ask-confirmation',
-}
+export const BGMessageType = PageEventType;
+export type BGMessageType = PageEventType;
 
-type BGRequestMap = {
-  [BGMessageType.PageClick]: PageRequestMap[PageEventType.PageClick];
-  [BGMessageType.CustomClick]: PageRequestMap[PageEventType.CustomClick];
-  [BGMessageType.AskConfirmation]: PageRequestMap[PageEventType.AskConfirmation];
-};
+type BGRequestMap = PageRequestMap;
+export type BGRequest = PageRequest;
 
-export type BGRequest<T extends BGMessageType> = {
-  type: T;
-} & BGRequestMap[T];
-
-type BGResponseMap = {
+export type BGResponseMap = {
   [BGMessageType.PageClick]: undefined;
   [BGMessageType.CustomClick]: { data: 'ok' };
   [BGMessageType.AskConfirmation]: { data: 'accepted' | 'rejected' };
 };
 
-export type BGResponse<T extends BGMessageType> = BGResponseMap[T];
+// export type BGResponse<K extends BGRequest> = BGResponseMap[K['type']];
+export type BGResponse = BGResponseMap[keyof BGResponseMap];
 
 /**
  * Types for communication with content script.
@@ -53,57 +51,60 @@ export type BGResponse<T extends BGMessageType> = BGResponseMap[T];
  * <WARNING> MessageType in content and background shouldn't have the same string.
  * Otherwise, the message will be sent to both content and background.
  */
-export enum CNMessageType {
-  AppUi = 'content-appUi',
-  General = 'content-general',
-}
+export const CNMessageType = {
+  AppUi: 'content-appUi',
+  General: 'content-general',
+} as const;
+export type CNMessageType = (typeof CNMessageType)[keyof typeof CNMessageType];
 
 type CNRequestMap = {
   [CNMessageType.AppUi]: {
+    type: typeof CNMessageType.AppUi;
     data: string;
   };
-  [CNMessageType.General]: any;
+  [CNMessageType.General]: {
+    type: typeof CNMessageType.General;
+    [key: string]: any;
+  };
 };
+export type CNRequest = CNRequestMap[keyof CNRequestMap];
 
-export type CNRequest<T extends CNMessageType> = {
-  type: T;
-} & CNRequestMap[T];
-
-type CNResponseMap = {
+export type CNResponseMap = {
   [CNMessageType.AppUi]: { data: 'ok' };
   [CNMessageType.General]: undefined;
 };
 
-export type CNResponse<T extends CNMessageType> = CNResponseMap[T];
+// export type CNResponse<K extends CNRequest> = CNResponseMap[K['type']];
+export type CNResponse = CNResponseMap[keyof CNRequestMap];
 
 declare global {
   interface Window {
     //adds definition to Window, but you can do the same with HTMLElement
-    addEventListener<K extends PageEventType>(
-      type: K,
+    addEventListener<T extends PageEventType>(
+      type: T,
       listener: (
         this: Window,
-        listener: PageRequest<K>,
+        listener: PageRequestMap[T],
         options?: boolean | AddEventListenerOptions,
       ) => void,
     ): void;
-    dispatchEvent<K extends PageEventType>(ev: PageRequest<K>): boolean;
+    dispatchEvent<T extends PageEventType>(ev: PageRequestMap[T]): boolean;
   }
 
   namespace chrome.tabs {
-    export function sendMessage<T extends CNMessageType>(
+    export function sendMessage<K extends CNRequest>(
       tabId: number,
-      message: CNRequest<T>,
-    ): Promise<CNResponse<T>>;
+      message: K,
+    ): Promise<CNResponseMap[K['type']]>;
   }
 
   namespace chrome.runtime {
-    export function sendMessage<T extends BGMessageType>(
-      message: BGRequest<T>,
-    ): Promise<BGResponse<T>>;
-    export function sendMessage<T extends BGMessageType>(
-      message: BGRequest<T>,
-      responseCallback: (response: BGResponse<T>) => void,
+    export function sendMessage<K extends BGRequest>(
+      message: K,
+    ): Promise<BGResponseMap[K['type']]>;
+    export function sendMessage<K extends BGRequest>(
+      message: K,
+      responseCallback: (response: BGResponseMap[K['type']]) => void,
     ): void;
   }
 }
