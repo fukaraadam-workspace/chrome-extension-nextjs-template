@@ -10,17 +10,10 @@ export const PageEventType = {
 type PageEventType = (typeof PageEventType)[keyof typeof PageEventType];
 
 type PageRequestMap = {
-  [PageEventType.PageClick]: {
-    type: typeof PageEventType.PageClick;
-  } & Omit<WindowEventMap[typeof PageEventType.PageClick], 'type'>;
-  [PageEventType.CustomClick]: {
-    type: typeof PageEventType.CustomClick;
-  } & Omit<Event, 'type'>;
-  [PageEventType.AskConfirmation]: {
-    type: typeof PageEventType.AskConfirmation;
-  } & Omit<CustomEvent<{ question: string }>, 'type'>;
+  [PageEventType.PageClick]: WindowEventMap[typeof PageEventType.PageClick];
+  [PageEventType.CustomClick]: Event;
+  [PageEventType.AskConfirmation]: CustomEvent<{ question: string }>;
 };
-type PageRequest = PageRequestMap[keyof PageRequestMap];
 
 /**
  * Types for communication with background script.
@@ -30,7 +23,18 @@ type PageRequest = PageRequestMap[keyof PageRequestMap];
  * Otherwise, the message will be sent to both content and background.
  */
 export const BGMessageType = PageEventType;
-export type BGRequest = PageRequest;
+type BGRequestMap = {
+  [BGMessageType.PageClick]: PageRequestMap[typeof BGMessageType.PageClick] & {
+    type: typeof BGMessageType.PageClick;
+  };
+  [BGMessageType.CustomClick]: PageRequestMap[typeof BGMessageType.CustomClick] & {
+    type: typeof BGMessageType.CustomClick;
+  };
+  [BGMessageType.AskConfirmation]: PageRequestMap[typeof BGMessageType.AskConfirmation] & {
+    type: typeof BGMessageType.AskConfirmation;
+  };
+};
+export type BGRequest = BGRequestMap[keyof BGRequestMap];
 export type BGResponseMap = {
   [BGMessageType.PageClick]: undefined;
   [BGMessageType.CustomClick]: { data: 'ok' };

@@ -2,10 +2,7 @@ import { PageEventType } from 'shared-lib';
 
 export async function triggerCustomEvent(window: Window) {
   const event = new Event(PageEventType.CustomClick);
-  window.dispatchEvent<typeof PageEventType.CustomClick>({
-    ...event,
-    type: PageEventType.CustomClick,
-  });
+  window.dispatchEvent<typeof PageEventType.CustomClick>(event);
 }
 
 export async function triggerConfirmation(window: Window) {
@@ -14,8 +11,5 @@ export async function triggerConfirmation(window: Window) {
       question: 'Do you confirm?',
     },
   });
-  window.dispatchEvent<typeof PageEventType.AskConfirmation>({
-    ...event,
-    type: PageEventType.AskConfirmation,
-  });
+  window.dispatchEvent<typeof PageEventType.AskConfirmation>(event);
 }
