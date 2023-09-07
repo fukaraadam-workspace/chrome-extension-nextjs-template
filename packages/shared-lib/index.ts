@@ -23,8 +23,9 @@ type PageRequestMap = {
  * Otherwise, the message will be sent to both content and background.
  */
 export const BGMessageType = PageEventType;
+type BGMessageType = (typeof BGMessageType)[keyof typeof BGMessageType];
 type BGRequestMap = {
-  [BGMessageType.PageClick]: PageRequestMap[typeof BGMessageType.PageClick] & {
+  [BGMessageType.PageClick]: {
     type: typeof BGMessageType.PageClick;
   };
   [BGMessageType.CustomClick]: PageRequestMap[typeof BGMessageType.CustomClick] & {
@@ -52,6 +53,7 @@ export const CNMessageType = {
   AppUi: 'content-appUi',
   General: 'content-general',
 } as const;
+type CNMessageType = (typeof CNMessageType)[keyof typeof CNMessageType];
 
 type CNRequestMap = {
   [CNMessageType.AppUi]: {
@@ -85,19 +87,19 @@ declare global {
   }
 
   namespace chrome.tabs {
-    export function sendMessage<K extends CNRequest>(
+    export function sendMessage<T extends CNMessageType>(
       tabId: number,
-      message: K,
-    ): Promise<CNResponseMap[K['type']]>;
+      message: CNRequestMap[T],
+    ): Promise<CNResponseMap[T]>;
   }
 
   namespace chrome.runtime {
-    export function sendMessage<K extends BGRequest>(
-      message: K,
-    ): Promise<BGResponseMap[K['type']]>;
-    export function sendMessage<K extends BGRequest>(
-      message: K,
-      responseCallback: (response: BGResponseMap[K['type']]) => void,
+    export function sendMessage<T extends BGMessageType>(
+      message: BGRequestMap[T],
+    ): Promise<BGResponseMap[T]>;
+    export function sendMessage<T extends BGMessageType>(
+      message: BGRequestMap[T],
+      responseCallback: (response: BGResponseMap[T]) => void,
     ): void;
   }
 }

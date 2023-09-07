@@ -1,4 +1,4 @@
-import { PageEventType, CNMessageType } from 'shared-lib';
+import { PageEventType, BGMessageType, CNMessageType } from 'shared-lib';
 import type { CNRequest, CNResponseMap } from 'shared-lib';
 
 console.log('Content script loaded!');
@@ -10,25 +10,33 @@ console.log('Content script loaded!');
 
 // Listen for a regular event.
 window.addEventListener(PageEventType.PageClick, function (event) {
-  chrome.runtime.sendMessage(event);
+  chrome.runtime.sendMessage<typeof BGMessageType.PageClick>({
+    type: BGMessageType.PageClick,
+  });
 });
 
 // Listen for a custom event.
 window.addEventListener(PageEventType.CustomClick, function (event) {
-  chrome.runtime.sendMessage(event, (response) => {
-    console.log(
-      `Background script responded to custom click with: ${response.data}`,
-    );
-  });
+  chrome.runtime.sendMessage<typeof BGMessageType.CustomClick>(
+    { ...event, type: BGMessageType.CustomClick },
+    (response) => {
+      console.log(
+        `Background script responded to custom click with: ${response.data}`,
+      );
+    },
+  );
 });
 
 // Listen for a custom event.
 window.addEventListener(PageEventType.AskConfirmation, function (event) {
-  chrome.runtime.sendMessage(event, (response) => {
-    console.log(
-      `Background script responded to confirmation with: ${response.data}`,
-    );
-  });
+  chrome.runtime.sendMessage<typeof BGMessageType.AskConfirmation>(
+    { ...event, type: BGMessageType.AskConfirmation },
+    (response) => {
+      console.log(
+        `Background script responded to confirmation with: ${response.data}`,
+      );
+    },
+  );
 });
 
 /**
