@@ -24,18 +24,20 @@ type PageRequestMap = {
  */
 export const BGMessageType = PageEventType;
 type BGMessageType = (typeof BGMessageType)[keyof typeof BGMessageType];
+
 type BGRequestMap = {
   [BGMessageType.PageClick]: {
     type: typeof BGMessageType.PageClick;
   };
-  [BGMessageType.CustomClick]: PageRequestMap[typeof BGMessageType.CustomClick] & {
+  [BGMessageType.CustomClick]: {
     type: typeof BGMessageType.CustomClick;
   };
-  [BGMessageType.AskConfirmation]: PageRequestMap[typeof BGMessageType.AskConfirmation] & {
+  [BGMessageType.AskConfirmation]: {
     type: typeof BGMessageType.AskConfirmation;
-  };
+  } & { question: string };
 };
 export type BGRequest = BGRequestMap[keyof BGRequestMap];
+
 export type BGResponseMap = {
   [BGMessageType.PageClick]: undefined;
   [BGMessageType.CustomClick]: { data: 'ok' };

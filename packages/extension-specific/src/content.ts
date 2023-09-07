@@ -6,6 +6,7 @@ console.log('Content script loaded!');
 /**
  * Proxy for events from page
  * Generally used to detect events from page and trigger a background script
+ * <Warning> Do not pass event to sendMessage, it will only pass "isTrusted" property
  */
 
 // Listen for a regular event.
@@ -18,7 +19,7 @@ window.addEventListener(PageEventType.PageClick, function (event) {
 // Listen for a custom event.
 window.addEventListener(PageEventType.CustomClick, function (event) {
   chrome.runtime.sendMessage<typeof BGMessageType.CustomClick>(
-    { ...event, type: BGMessageType.CustomClick },
+    { type: BGMessageType.CustomClick },
     (response) => {
       console.log(
         `Background script responded to custom click with: ${response.data}`,
@@ -30,7 +31,7 @@ window.addEventListener(PageEventType.CustomClick, function (event) {
 // Listen for a custom event.
 window.addEventListener(PageEventType.AskConfirmation, function (event) {
   chrome.runtime.sendMessage<typeof BGMessageType.AskConfirmation>(
-    { ...event, type: BGMessageType.AskConfirmation },
+    { type: BGMessageType.AskConfirmation, ...event.detail },
     (response) => {
       console.log(
         `Background script responded to confirmation with: ${response.data}`,
