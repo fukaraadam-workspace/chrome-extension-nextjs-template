@@ -15,7 +15,7 @@ export default function Home() {
   return (
     <div className="mx-auto h-[600px] w-[400px]">
       {/* Above is added for extension */}
-      <main className="flex h-full flex-col items-center justify-between p-12">
+      <main className="flex min-h-screen flex-col items-center justify-between p-12">
         <Image
           className="relative dark:drop-shadow-[0_0_0.3rem_#ffffff70] dark:invert"
           src="/next.svg"

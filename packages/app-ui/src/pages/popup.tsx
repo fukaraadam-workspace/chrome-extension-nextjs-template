@@ -1,10 +1,12 @@
 import Image from 'next/image';
 
 export default function Popup() {
-  const confirmationHandler = async (isAccepted: boolean) => {};
+  const confirmationHandler = async (isAccepted: boolean) => {
+    window.close();
+  };
 
   return (
-    <main className="flex h-screen flex-col items-center justify-between p-12">
+    <main className="flex min-h-screen flex-col items-center justify-between p-12">
       <Image
         className="relative dark:drop-shadow-[0_0_0.3rem_#ffffff70] dark:invert"
         src="/next.svg"
