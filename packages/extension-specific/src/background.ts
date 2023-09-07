@@ -24,6 +24,13 @@ const extMessageHandler = (
     });
   } else if (msg.type === BGMessageType.AskConfirmation) {
     console.log('Asking for confirmation from test app! Responsing now...');
+    chrome.windows.create({
+      url: './popup.html',
+      type: 'popup',
+      height: 600,
+      width: 400,
+      left: 500,
+    });
     sendResponse<typeof msg.type>({
       data: 'accepted',
     });
