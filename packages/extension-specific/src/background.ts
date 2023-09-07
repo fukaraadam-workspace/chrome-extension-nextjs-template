@@ -23,9 +23,15 @@ const extMessageHandler = (
       data: 'ok',
     });
   } else if (msg.type === BGMessageType.AskConfirmation) {
-    console.log('Asking for confirmation from test app! Responsing now...');
+    const popupPath = chrome.runtime.getURL(`./popup.html`);
+    let popupUrl = new URL(popupPath);
+    popupUrl.searchParams.append('question', msg.question);
+    console.log(
+      'Asking for confirmation from test app!: ',
+      popupUrl.toString(),
+    );
     chrome.windows.create({
-      url: './popup.html',
+      url: popupUrl.toString(),
       type: 'popup',
       height: 600,
       width: 400,

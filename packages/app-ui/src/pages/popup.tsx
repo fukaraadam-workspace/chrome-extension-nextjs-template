@@ -1,8 +1,14 @@
 import Image from 'next/image';
+import { useRouter } from 'next/router';
+// Controllers
+import { respondQuestion } from '@/lib/controllers/send-message';
 
 export default function Popup() {
+  const router = useRouter();
+  const { question } = router.query;
+
   const confirmationHandler = async (isAccepted: boolean) => {
-    window.close();
+    respondQuestion(window, isAccepted);
   };
 
   return (
@@ -17,7 +23,7 @@ export default function Popup() {
       />
 
       <div>
-        <p className="my-2 text-center">Send Message Response</p>
+        <p className="my-2 text-center">{question}</p>
 
         <div>
           <button

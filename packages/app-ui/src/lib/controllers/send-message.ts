@@ -6,7 +6,7 @@ export async function sendMessage(data: string) {
   return resp;
 }
 
-export async function sendMessageToExtension(data: string) {
+async function sendMessageToExtension(data: string) {
   const tabs = await chrome.tabs.query({ active: true, currentWindow: true });
   return await chrome.tabs.sendMessage<typeof CNMessageType.AppUi>(
     tabs[0].id!,
@@ -15,4 +15,8 @@ export async function sendMessageToExtension(data: string) {
       data,
     },
   );
+}
+
+export function respondQuestion(window: Window, data: boolean) {
+  window.close();
 }
