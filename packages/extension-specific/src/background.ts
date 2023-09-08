@@ -48,10 +48,7 @@ const extMessageHandler = (
     response?: BGResponseMap[T],
   ) => void,
 ) => {
-  if (msg.type === BGMessageType.PageClick) {
-    console.log(`Page Clicked from ${sender.tab?.url}!`);
-    sendResponse<typeof msg.type>();
-  } else if (msg.type === BGMessageType.CustomClick) {
+  if (msg.type === BGMessageType.CustomClick) {
     console.log('Button Clicked from test app! Responsing now...');
     sendResponse<typeof msg.type>({
       data: 'ok',

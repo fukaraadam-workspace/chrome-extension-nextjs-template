@@ -9,13 +9,6 @@ console.log('Content script loaded!');
  * <Warning> Do not pass event to sendMessage, it will only pass "isTrusted" property
  */
 
-// Listen for a regular event.
-window.addEventListener(PageEventType.PageClick, function (event) {
-  chrome.runtime.sendMessage<typeof BGMessageType.PageClick>({
-    type: BGMessageType.PageClick,
-  });
-});
-
 // Listen for a custom event.
 window.addEventListener(PageEventType.CustomClick, function (event) {
   chrome.runtime.sendMessage<typeof BGMessageType.CustomClick>(
@@ -53,10 +46,6 @@ function extMessageHandler(
     sendResponse<typeof msg.type>({
       data: 'ok',
     });
-  } else if (msg.type === CNMessageType.General) {
-    console.log('Following general message recieved!');
-    console.log(msg);
-    sendResponse<typeof msg.type>(undefined);
   } else {
     // <Warning> Don't use here, or it will capture unrelated messages
   }

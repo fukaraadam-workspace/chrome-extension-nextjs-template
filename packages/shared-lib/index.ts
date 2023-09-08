@@ -3,14 +3,12 @@
  * Generally proxied to background script.
  */
 export const PageEventType = {
-  PageClick: 'click',
   CustomClick: 'custom-click',
   AskConfirmation: 'ask-confirmation',
 } as const;
 type PageEventType = (typeof PageEventType)[keyof typeof PageEventType];
 
 type PageRequestMap = {
-  [PageEventType.PageClick]: WindowEventMap[typeof PageEventType.PageClick];
   [PageEventType.CustomClick]: Event;
   [PageEventType.AskConfirmation]: CustomEvent<{ question: string }>;
 };
@@ -26,9 +24,6 @@ export const BGMessageType = PageEventType;
 type BGMessageType = (typeof BGMessageType)[keyof typeof BGMessageType];
 
 type BGRequestMap = {
-  [BGMessageType.PageClick]: {
-    type: typeof BGMessageType.PageClick;
-  };
   [BGMessageType.CustomClick]: {
     type: typeof BGMessageType.CustomClick;
   };
@@ -39,7 +34,6 @@ type BGRequestMap = {
 export type BGRequest = BGRequestMap[keyof BGRequestMap];
 
 export type BGResponseMap = {
-  [BGMessageType.PageClick]: undefined;
   [BGMessageType.CustomClick]: { data: 'ok' };
   [BGMessageType.AskConfirmation]: { data: string };
 };
@@ -53,7 +47,6 @@ export type BGResponseMap = {
  */
 export const CNMessageType = {
   AppUi: 'content-appUi',
-  General: 'content-general',
 } as const;
 type CNMessageType = (typeof CNMessageType)[keyof typeof CNMessageType];
 
@@ -62,16 +55,11 @@ type CNRequestMap = {
     type: typeof CNMessageType.AppUi;
     data: string;
   };
-  [CNMessageType.General]: {
-    type: typeof CNMessageType.General;
-    [key: string]: any;
-  };
 };
 export type CNRequest = CNRequestMap[keyof CNRequestMap];
 
 export type CNResponseMap = {
   [CNMessageType.AppUi]: { data: 'ok' };
-  [CNMessageType.General]: undefined;
 };
 
 declare global {
