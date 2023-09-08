@@ -2,7 +2,7 @@ import { generateEndpoints } from '@rtk-query/codegen-openapi';
 
 const uiDirectory = '../app-ui';
 
-const runAsync = async () => {
+async function apiCodegen() {
   // CoinGeckoApi
   await generateEndpoints({
     // schemaFile: 'https://www.coingecko.com/api/documentations/v3/swagger.json',
@@ -16,12 +16,12 @@ const runAsync = async () => {
     // hooks: true, // Generate query and mutation hooks, but not lazy queries
     hooks: { queries: true, lazyQueries: true, mutations: true },
   });
-};
+  console.log(`api-codegen: Updated api types in ${uiDirectory}`);
+}
 
 // Self-invocation async function
 (async () => {
-  await runAsync();
-  console.log(`api-codegen: Updated api types in ${uiDirectory}`);
+  await apiCodegen();
 })().catch((err) => {
   console.error(err);
   throw err;

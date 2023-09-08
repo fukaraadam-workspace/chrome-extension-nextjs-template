@@ -4,92 +4,67 @@ import * as path from 'path';
 const uiDirectory = '../app-ui/out';
 const outDirectory = '../../out';
 
-fs.copy(uiDirectory, outDirectory, (err) => {
-  if (err) {
-    console.error('--Error copying directory--');
-    throw err;
-  } else {
-    console.log(`Directory ${uiDirectory} copied to ${outDirectory}`);
+async function BundleExtensionUi() {
+  await fs.copy(uiDirectory, outDirectory);
+  console.log(
+    `bundle-extension-ui: Directory ${uiDirectory} copied to ${outDirectory}`,
+  );
 
-    const directoryToRename = path.join(outDirectory, '/_next');
-    const newDirectoryName = path.join(outDirectory, '/next');
-    fs.remove(newDirectoryName, (err) => {
-      if (err) {
-        console.error('--Error removing old directory--');
-        throw err;
-      } else {
-        // Rename the directory
-        fs.rename(directoryToRename, newDirectoryName, (err) => {
-          if (err) {
-            console.error('--Error renaming directory--');
-            throw err;
-          } else {
-            console.log(
-              `Directory ${directoryToRename} renamed to ${newDirectoryName}`,
-            );
+  const directoryToRename = path.join(outDirectory, '/_next');
+  const newDirectoryName = path.join(outDirectory, '/next');
 
-            // Search and replace in HTML files
-            searchAndReplaceInFiles(outDirectory, /\/_next/g, '/next');
-          }
-        });
-      }
-    });
-  }
-});
+  // Remove old directory
+  await fs.remove(newDirectoryName);
+  console.log(`bundle-extension-ui: Removed ${newDirectoryName}`);
 
-function searchAndReplaceInFiles(
+  // Rename the directory
+  await fs.rename(directoryToRename, newDirectoryName);
+  console.log(
+    `bundle-extension-ui: Directory ${directoryToRename} renamed to ${newDirectoryName}`,
+  );
+
+  // Search and replace in HTML files
+  await searchAndReplaceInFiles(outDirectory, /\/_next/g, '/next');
+  console.log('bundle-extension-ui: Search and Replace is done');
+}
+
+async function searchAndReplaceInFiles(
   directory: string,
   searchPattern: string | RegExp,
   replaceText: string,
 ) {
-  fs.readdir(directory, (err, files) => {
-    if (err) {
-      console.error('--Error reading directory--');
-      throw err;
-    }
+  const files = await fs.readdir(directory);
 
-    files.forEach((file) => {
-      const filePath = path.join(directory, file);
+  files.forEach(async (file) => {
+    const filePath = path.join(directory, file);
 
-      fs.stat(filePath, (statErr, stats) => {
-        if (statErr) {
-          console.error('--Error getting file stats--');
-          throw statErr;
-        }
+    const stats = await fs.stat(filePath);
 
-        if (stats.isDirectory()) {
-          // Recursively search and replace in subdirectories
-          searchAndReplaceInFiles(filePath, searchPattern, replaceText);
-        } else if (stats.isFile()) {
-          // Process HTML files
-          fs.readFile(filePath, 'utf8', (readErr, data) => {
-            if (readErr) {
-              console.error('--Error reading file--');
-              throw readErr;
-            }
+    if (stats.isDirectory()) {
+      // Recursively search and replace in subdirectories
+      await searchAndReplaceInFiles(filePath, searchPattern, replaceText);
+    } else if (stats.isFile()) {
+      // Process HTML files
+      const data = await fs.readFile(filePath, 'utf8');
 
-            let isFoundInFile = false;
-            const updatedData = data.replaceAll(
-              searchPattern,
-              function (_match) {
-                isFoundInFile = true;
-                return replaceText;
-              },
-            );
-
-            if (isFoundInFile) {
-              fs.writeFile(filePath, updatedData, 'utf8', (writeErr) => {
-                if (writeErr) {
-                  console.error('--Error writing file--');
-                  throw writeErr;
-                } else {
-                  console.log(`Updated file: ${filePath}`);
-                }
-              });
-            }
-          });
-        }
+      let isFoundInFile = false;
+      const updatedData = data.replaceAll(searchPattern, function (_match) {
+        isFoundInFile = true;
+        return replaceText;
       });
-    });
+
+      if (isFoundInFile) {
+        await fs.writeFile(filePath, updatedData, 'utf8');
+        console.log(`bundle-extension-ui: Updated file: ${filePath}`);
+      }
+    }
   });
 }
+
+// Self-invocation async function
+(async () => {
+  await BundleExtensionUi();
+})().catch((err) => {
+  console.error(err);
+  throw err;
+});

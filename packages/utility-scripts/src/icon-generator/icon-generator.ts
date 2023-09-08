@@ -10,6 +10,31 @@ const extensionIconDirectory = '../extension-specific/public/assets';
 const extensionSizes = [16, 48, 128];
 const extensionIconType = 'image/png' as const;
 
+async function IconGenerator() {
+  const sourceData = await readFile(sourceIcon);
+  let generatedJobs: Promise<void>[] = [];
+  // Icons for extension
+  for (const size of extensionSizes) {
+    generatedJobs.push(
+      resizeImageToFile(
+        sourceData,
+        `${extensionIconDirectory}/icon${size}.png`,
+        size,
+        size,
+      ),
+    );
+  }
+  // Icons for UI
+  generatedJobs.push(
+    generateIcoToFile(sourceData, `${uiIconDirectory}/favicon.ico`),
+  );
+
+  await Promise.all(generatedJobs);
+  console.log(
+    `icon-generator: Icons generated in ${uiIconDirectory} and ${extensionIconDirectory}`,
+  );
+}
+
 async function resizeImageToFile(
   sourceData: Buffer,
   destination: string,
@@ -40,26 +65,7 @@ async function generateIcoToFile(sourceData: Buffer, destination: string) {
 
 // Self-invocation async function
 (async () => {
-  const sourceData = await readFile(sourceIcon);
-  let generatedJobs: Promise<void>[] = [];
-  // Icons for extension
-  for (const size of extensionSizes) {
-    generatedJobs.push(
-      resizeImageToFile(
-        sourceData,
-        `${extensionIconDirectory}/icon${size}.png`,
-        size,
-        size,
-      ),
-    );
-  }
-  // Icons for UI
-  generatedJobs.push(
-    generateIcoToFile(sourceData, `${uiIconDirectory}/favicon.ico`),
-  );
-
-  await Promise.all(generatedJobs);
-  console.log('Icon generation completed');
+  await IconGenerator();
 })().catch((err) => {
   console.error(err);
   throw err;
