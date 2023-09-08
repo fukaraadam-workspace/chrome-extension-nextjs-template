@@ -2,6 +2,11 @@
   "name": "Next JS Chrome Extension",
   "description": "Next.js Chrome Extension starter",
   "manifest_version": 3,
+  "icons": {
+    "16": "assets/icon16.png",
+    "48": "assets/icon48.png",
+    "128": "assets/icon128.png"
+  },
   "action": {
     "default_title": "Next.js Chrome Extension App",
     "default_popup": "index.html"

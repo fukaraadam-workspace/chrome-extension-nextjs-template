@@ -36,6 +36,15 @@ module.exports = {
     new CopyWebpackPlugin({
       patterns: [
         {
+          from: 'public',
+          to: path.join(__dirname, 'out'),
+          force: true,
+        },
+      ],
+    }),
+    new CopyWebpackPlugin({
+      patterns: [
+        {
           from: 'public/manifest.json',
           to: path.join(__dirname, 'out'),
           force: true,
