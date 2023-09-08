@@ -32,7 +32,7 @@ declare global {
 
 /**
  * Types for communication with Background.
- * Generally used by content script to proxy page events.
+ * Generally used by content script to pass page events.
  *
  * [Content] => [Background]
  *
@@ -54,7 +54,7 @@ export type BGRequest = BGRequestMap[keyof BGRequestMap];
 
 export type BGResponseMap = {
   [BGMessageType.CustomClick]: { data: 'ok' };
-  [BGMessageType.AskConfirmation]: { data: string };
+  [BGMessageType.AskConfirmation]: { isPopupOpened: boolean };
 };
 
 declare global {
@@ -109,3 +109,26 @@ declare global {
     ): Promise<CNResponseMap[T]>;
   }
 }
+
+/**
+ * Types for communication with AppUi.
+ * Generally used by background script to pass BGRequest to AppUi.
+ *
+ * [Background] => [AppUi]
+ *
+ * <WARNING> MessageType in content and background shouldn't have the same string.
+ * Otherwise, the message will be sent to both content and background.
+ */
+const AppMessageType = {
+  AskConfirmation: 'ask-confirmation',
+} as const;
+export type AppMessageType =
+  (typeof AppMessageType)[keyof typeof AppMessageType];
+
+export type AppRequestMap = {
+  [AppMessageType.AskConfirmation]: {
+    type: typeof AppMessageType.AskConfirmation;
+    question: string;
+  };
+};
+export type AppRequest = AppRequestMap[keyof AppRequestMap];

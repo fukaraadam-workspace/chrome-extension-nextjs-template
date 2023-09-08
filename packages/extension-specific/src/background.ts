@@ -1,5 +1,10 @@
 import { BGMessageType } from 'shared-lib';
-import type { BGRequest, BGResponseMap } from 'shared-lib';
+import type {
+  BGRequest,
+  BGResponseMap,
+  AppMessageType,
+  AppRequestMap,
+} from 'shared-lib';
 
 console.log('Background script loaded!');
 
@@ -8,7 +13,10 @@ console.log('Background script loaded!');
  */
 let currentPopup: chrome.windows.Window | undefined;
 
-function triggerPopup(hostTabId: number, question: string) {
+function triggerPopup<T extends AppMessageType>(
+  hostTabId: number,
+  request: AppRequestMap[T],
+) {
   const handlePopupClosed = (windowId: number) => {
     if (currentPopup && windowId == currentPopup.id) {
       currentPopup = undefined;
@@ -19,7 +27,9 @@ function triggerPopup(hostTabId: number, question: string) {
     const popupPath = chrome.runtime.getURL(`./popup.html`);
     let popupUrl = new URL(popupPath);
     popupUrl.searchParams.append('hostTabId', hostTabId.toString());
-    popupUrl.searchParams.append('question', question);
+    for (const [key, value] of Object.entries(request)) {
+      popupUrl.searchParams.append(key, value);
+    }
     chrome.windows
       .create({
         url: popupUrl.toString(),
@@ -32,9 +42,9 @@ function triggerPopup(hostTabId: number, question: string) {
         currentPopup = window;
         chrome.windows.onRemoved.addListener(handlePopupClosed);
       });
-    return 'Asked successfully' as const;
+    return true;
   } else {
-    return 'Error: There is already a popup' as const;
+    return false;
   }
 }
 
@@ -42,6 +52,7 @@ function triggerPopup(hostTabId: number, question: string) {
  * Listener for runtime.onMessage
  *
  * [Content] => BGRequest => [Background] => BGResponse => [Content]
+ * [Background] => BGRequest => [AppUI] => BGResponse => [Content]
  */
 const extMessageHandler = (
   msg: BGRequest,
@@ -57,9 +68,9 @@ const extMessageHandler = (
     });
   } else if (msg.type === BGMessageType.AskConfirmation && sender.tab?.id) {
     console.log('Triggered Popup from test app! Responsing now...');
-    const resp = triggerPopup(sender.tab?.id, msg.question);
+    const isPopupOpened = triggerPopup<typeof msg.type>(sender.tab?.id, msg);
     sendResponse<typeof msg.type>({
-      data: resp,
+      isPopupOpened,
     });
   } else {
     // <Warning> Don't use here, or it will capture unrelated messages

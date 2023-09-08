@@ -29,9 +29,7 @@ window.addEventListener(PageEventType.AskConfirmation, function (event) {
   chrome.runtime.sendMessage<typeof BGMessageType.AskConfirmation>(
     { type: BGMessageType.AskConfirmation, ...event.detail },
     (response) => {
-      console.log(
-        `Background script responded to confirmation with: ${response.data}`,
-      );
+      console.log(`Background script opened popup: ${response.isPopupOpened}`);
     },
   );
 });

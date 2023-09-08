@@ -2,10 +2,13 @@ import Image from 'next/image';
 import { useRouter } from 'next/router';
 // Controllers
 import { respondQuestion } from '@/lib/controllers/send-message';
+import type { AppRequest } from 'shared-lib';
 
 export default function Popup() {
   const router = useRouter();
-  const { hostTabId, question } = router.query;
+  const { hostTabId, question } = router.query as AppRequest & {
+    hostTabId: string;
+  };
 
   const confirmationHandler = async (isAccepted: boolean) => {
     respondQuestion(window, hostTabId, isAccepted);
