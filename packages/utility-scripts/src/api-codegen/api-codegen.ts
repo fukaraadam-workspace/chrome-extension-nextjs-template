@@ -21,7 +21,7 @@ const runAsync = async () => {
 // Self-invocation async function
 (async () => {
   await runAsync();
-  console.log(`codegen: Updated api types in ${uiDirectory}`);
+  console.log(`api-codegen: Updated api types in ${uiDirectory}`);
 })().catch((err) => {
   console.error(err);
   throw err;
