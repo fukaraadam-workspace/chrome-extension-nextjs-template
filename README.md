@@ -14,7 +14,7 @@ Run all these commands from root directory.
 - `npm run dev` - Start app-ui in development mode.
 - `npm run build-extension:ui` - Build again for app-ui changes without rebuilding others.
 - `npm run build-extension:specific` - Build again for extension-specific changes without rebuilding others.
-- `npm run utility:codegen` - Update app-ui RTK Query types from swagger.
+- `npm run utility:api-codegen` - Update app-ui api types from swagger.
 - `npm run utility:icon-generator` - Update app-ui and extension-specific icons.
 
 ## Structure

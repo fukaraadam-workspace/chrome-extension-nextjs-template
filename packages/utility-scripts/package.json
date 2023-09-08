@@ -4,7 +4,7 @@
   "scripts": {
     "bundle-extension:ui": "ts-node ./src/build-extension/build-extension-ui.ts",
     "bundle-extension:specific": "ts-node ./src/build-extension/build-extension-specific.ts",
-    "codegen": "ts-node ./src/api-codegen/api-codegen.ts",
+    "api-codegen": "ts-node ./src/api-codegen/api-codegen.ts",
     "icon-generator": "ts-node ./src/icon-generator/icon-generator.ts"
   },
   "dependencies": {
