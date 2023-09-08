@@ -8,7 +8,7 @@ console.log('Background script loaded!');
  */
 let currentPopup: chrome.windows.Window | undefined;
 
-function triggerPopup(question: string) {
+function triggerPopup(hostTabId: number, question: string) {
   const handlePopupClosed = (windowId: number) => {
     if (currentPopup && windowId == currentPopup.id) {
       currentPopup = undefined;
@@ -18,6 +18,7 @@ function triggerPopup(question: string) {
   if (!currentPopup) {
     const popupPath = chrome.runtime.getURL(`./popup.html`);
     let popupUrl = new URL(popupPath);
+    popupUrl.searchParams.append('hostTabId', hostTabId.toString());
     popupUrl.searchParams.append('question', question);
     chrome.windows
       .create({
@@ -53,8 +54,9 @@ const extMessageHandler = (
     sendResponse<typeof msg.type>({
       data: 'ok',
     });
-  } else if (msg.type === BGMessageType.AskConfirmation) {
-    const resp = triggerPopup(msg.question);
+  } else if (msg.type === BGMessageType.AskConfirmation && sender.tab?.id) {
+    console.log('Triggered Popup from test app! Responsing now...');
+    const resp = triggerPopup(sender.tab?.id, msg.question);
     sendResponse<typeof msg.type>({
       data: resp,
     });

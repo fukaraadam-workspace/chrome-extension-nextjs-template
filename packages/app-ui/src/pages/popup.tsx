@@ -5,10 +5,10 @@ import { respondQuestion } from '@/lib/controllers/send-message';
 
 export default function Popup() {
   const router = useRouter();
-  const { question } = router.query;
+  const { hostTabId, question } = router.query;
 
   const confirmationHandler = async (isAccepted: boolean) => {
-    respondQuestion(window, isAccepted);
+    respondQuestion(window, hostTabId, isAccepted);
   };
 
   return (

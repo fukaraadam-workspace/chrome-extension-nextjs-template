@@ -46,6 +46,9 @@ function extMessageHandler(
     sendResponse<typeof msg.type>({
       data: 'ok',
     });
+  } else if (msg.type === CNMessageType.Popup) {
+    console.log(`Is popup accepted: ${msg.isAccepted}`);
+    sendResponse<typeof msg.type>(undefined);
   } else {
     // <Warning> Don't use here, or it will capture unrelated messages
   }

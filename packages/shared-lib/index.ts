@@ -47,6 +47,7 @@ export type BGResponseMap = {
  */
 export const CNMessageType = {
   AppUi: 'content-appUi',
+  Popup: 'content-popup',
 } as const;
 type CNMessageType = (typeof CNMessageType)[keyof typeof CNMessageType];
 
@@ -55,11 +56,16 @@ type CNRequestMap = {
     type: typeof CNMessageType.AppUi;
     data: string;
   };
+  [CNMessageType.Popup]: {
+    type: typeof CNMessageType.Popup;
+    isAccepted: boolean;
+  };
 };
 export type CNRequest = CNRequestMap[keyof CNRequestMap];
 
 export type CNResponseMap = {
   [CNMessageType.AppUi]: { data: 'ok' };
+  [CNMessageType.Popup]: undefined;
 };
 
 declare global {

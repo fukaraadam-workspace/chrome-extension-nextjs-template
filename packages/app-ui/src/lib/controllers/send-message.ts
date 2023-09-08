@@ -17,6 +17,19 @@ async function sendMessageToExtension(data: string) {
   );
 }
 
-export function respondQuestion(window: Window, data: boolean) {
+export async function respondQuestion(
+  window: Window,
+  hostTabId: string | string[] | undefined,
+  isAccepted: boolean,
+) {
+  if (!Number.isNaN(hostTabId)) {
+    await chrome.tabs.sendMessage<typeof CNMessageType.Popup>(
+      Number(hostTabId),
+      {
+        type: CNMessageType.Popup,
+        isAccepted,
+      },
+    );
+  }
   window.close();
 }
