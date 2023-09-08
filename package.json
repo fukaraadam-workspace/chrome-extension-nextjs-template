@@ -5,10 +5,12 @@
     "packages/*"
   ],
   "scripts": {
-    "dev": "npm run dev --workspace=extension-test-app",
+    "dev": "npm run dev --workspace=app-ui",
+    "test": "npm run dev --workspace=extension-test-app",
     "build": "npm run build --workspaces --if-present",
-    "build:extension": "npm run build --workspace=app-ui && npm run build-extension:ui --workspace=utility-scripts && npm run build:extension-specific",
-    "build:extension-specific": "npm run build --workspace=extension-specific && npm run build-extension:specific --workspace=utility-scripts",
+    "build-extension": "npm run build-extension:ui && npm run build-extension:specific",
+    "build-extension:ui": "npm run build --workspace=app-ui && npm run bundle-extension:ui --workspace=utility-scripts",
+    "build-extension:specific": "npm run build --workspace=extension-specific && npm run bundle-extension:specific --workspace=utility-scripts",
     "utility:codegen": "npm run codegen --workspace=utility-scripts",
     "utility:icon-generator": "npm run icon-generator --workspace=utility-scripts"
   },

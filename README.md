@@ -5,15 +5,17 @@
 Run all these commands from root directory.
 
 - Firstly, Run `npm install`, this will install all dependencies for all workspaces.
-- Run `npm run build:extension` to build for chrome extension. Output will be in `./out` directory. Load output directory as unpacked extension in chrome (enable developer mode in extensions).
-- To test extension, run `npm run dev`.
-  - Open [http://localhost:3001](http://localhost:3001) with your browser to see the result. 3000 is reserved for app-ui.
+- Run `npm run build-extension` to build for chrome extension. Output will be in `./out` directory. Load output directory as unpacked extension in chrome (enable developer mode in extensions).
+- To test extension, run `npm run test`.
+  - Open [http://localhost:3001](http://localhost:3001) with your browser to see the result. 3000 is reserved for app-ui development.
 
-### Utility Scripts
+### Utility Commands
 
-- `npm run build:extension-specific` - Update extension-specific changes without rebuilding app UI.
-- `npm run utility:codegen` - Update App UI rtk-query types from swagger.
-- `npm run utility:icon-generator` - Update App UI and Extension icons.
+- `npm run dev` - Start app-ui in development mode.
+- `npm run build-extension:ui` - Build again for app-ui changes without rebuilding others.
+- `npm run build-extension:specific` - Build again for extension-specific changes without rebuilding others.
+- `npm run utility:codegen` - Update app-ui RTK Query types from swagger.
+- `npm run utility:icon-generator` - Update app-ui and extension-specific icons.
 
 ## Structure
 
