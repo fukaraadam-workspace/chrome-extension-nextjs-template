@@ -112,7 +112,7 @@ declare global {
 
 /**
  * Types for communication with AppUi.
- * Generally used by background script to pass BGRequest to AppUi.
+ * Generally used by background script to pass BGRequest to AppUi as popup.
  *
  * [Background] => [AppUi]
  *
