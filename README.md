@@ -9,6 +9,12 @@ Run all these commands from root directory.
 - To test extension, run `npm run dev`.
   - Open [http://localhost:3001](http://localhost:3001) with your browser to see the result. 3000 is reserved for app-ui.
 
+### Utility Scripts
+
+- `npm run build:extension-specific` - Update extension-specific changes without rebuilding app UI.
+- `npm run utility:codegen` - Update App UI rtk-query types from swagger.
+- `npm run utility:icon-generator` - Update App UI and Extension icons.
+
 ## Structure
 
 Git lfs is used for storing binary files. VS Code is used for development. Prettier is used for auto code formatting with Prettier VS Code extension.
