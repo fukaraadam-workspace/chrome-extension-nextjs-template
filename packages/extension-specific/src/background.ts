@@ -40,7 +40,8 @@ function triggerPopup(hostTabId: number, question: string) {
 
 /**
  * Listener for runtime.onMessage
- * Generally used by content script
+ *
+ * [Content] => BGRequest => [Background] => BGResponse => [Content]
  */
 const extMessageHandler = (
   msg: BGRequest,

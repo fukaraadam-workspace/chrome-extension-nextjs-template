@@ -6,6 +6,9 @@ console.log('Content script loaded!');
 /**
  * Proxy for events from page
  * Generally used to detect events from page and trigger a background script
+ *
+ * [Page] => PageRequest => [Content] => BGRequest => [Background] => BGResponse => [Content]
+ *
  * <Warning> Do not pass event to sendMessage, it will only pass "isTrusted" property
  */
 
@@ -35,7 +38,8 @@ window.addEventListener(PageEventType.AskConfirmation, function (event) {
 
 /**
  * Listener for runtime.onMessage
- * Generally used by background or AppUi
+ *
+ * [AppUi] => CNRequest => [Content] => CNResponse => [AppUi]
  */
 function extMessageHandler(
   msg: CNRequest,

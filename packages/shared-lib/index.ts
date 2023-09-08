@@ -1,6 +1,8 @@
 /**
- * Page Events, consumed by content script.
- * Generally proxied to background script.
+ * Types for communication with Page.
+ * Generally consumed by content script to proxy to background script.
+ *
+ * [Page] => [Content]
  */
 export const PageEventType = {
   CustomClick: 'custom-click',
@@ -13,9 +15,26 @@ type PageRequestMap = {
   [PageEventType.AskConfirmation]: CustomEvent<{ question: string }>;
 };
 
+declare global {
+  interface Window {
+    //adds definition to Window, but you can do the same with HTMLElement
+    addEventListener<T extends PageEventType>(
+      type: T,
+      listener: (
+        this: Window,
+        listener: PageRequestMap[T],
+        options?: boolean | AddEventListenerOptions,
+      ) => void,
+    ): void;
+    dispatchEvent<T extends PageEventType>(ev: PageRequestMap[T]): boolean;
+  }
+}
+
 /**
- * Types for communication with background script.
- * Generally used by content script.
+ * Types for communication with Background.
+ * Generally used by content script to proxy page events.
+ *
+ * [Content] => [Background]
  *
  * <WARNING> MessageType in content and background shouldn't have the same string.
  * Otherwise, the message will be sent to both content and background.
@@ -38,9 +57,23 @@ export type BGResponseMap = {
   [BGMessageType.AskConfirmation]: { data: string };
 };
 
+declare global {
+  namespace chrome.runtime {
+    export function sendMessage<T extends BGMessageType>(
+      message: BGRequestMap[T],
+    ): Promise<BGResponseMap[T]>;
+    export function sendMessage<T extends BGMessageType>(
+      message: BGRequestMap[T],
+      responseCallback: (response: BGResponseMap[T]) => void,
+    ): void;
+  }
+}
+
 /**
- * Types for communication with content script.
- * Generally used by AppUi or background script.
+ * Types for communication with Content.
+ * Generally used by AppUi to communicate with page.
+ *
+ * [AppUi] => [Content]
  *
  * <WARNING> MessageType in content and background shouldn't have the same string.
  * Otherwise, the message will be sent to both content and background.
@@ -69,33 +102,10 @@ export type CNResponseMap = {
 };
 
 declare global {
-  interface Window {
-    //adds definition to Window, but you can do the same with HTMLElement
-    addEventListener<T extends PageEventType>(
-      type: T,
-      listener: (
-        this: Window,
-        listener: PageRequestMap[T],
-        options?: boolean | AddEventListenerOptions,
-      ) => void,
-    ): void;
-    dispatchEvent<T extends PageEventType>(ev: PageRequestMap[T]): boolean;
-  }
-
   namespace chrome.tabs {
     export function sendMessage<T extends CNMessageType>(
       tabId: number,
       message: CNRequestMap[T],
     ): Promise<CNResponseMap[T]>;
-  }
-
-  namespace chrome.runtime {
-    export function sendMessage<T extends BGMessageType>(
-      message: BGRequestMap[T],
-    ): Promise<BGResponseMap[T]>;
-    export function sendMessage<T extends BGMessageType>(
-      message: BGRequestMap[T],
-      responseCallback: (response: BGResponseMap[T]) => void,
-    ): void;
   }
 }
