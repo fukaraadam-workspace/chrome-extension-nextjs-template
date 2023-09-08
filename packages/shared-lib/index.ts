@@ -41,7 +41,7 @@ export type BGRequest = BGRequestMap[keyof BGRequestMap];
 export type BGResponseMap = {
   [BGMessageType.PageClick]: undefined;
   [BGMessageType.CustomClick]: { data: 'ok' };
-  [BGMessageType.AskConfirmation]: { data: 'accepted' | 'rejected' };
+  [BGMessageType.AskConfirmation]: { data: string };
 };
 
 /**
