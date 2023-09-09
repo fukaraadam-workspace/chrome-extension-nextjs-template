@@ -1,7 +1,13 @@
 # Utility Scripts
 
-This folder contains utility scripts to be used manually.
+Utility scripts to be used manually.
 
 Has its own package-lock.json, because codegen depends on older versions of typescript, but ts-node uses typescript from its own node_modules.
 
-For scripts, use `npm run <script-name>` command.
+## ToDo
+
+- [x] Update icon in icon-generator.
+
+**Clean Up:**
+
+- [ ] Remove coinGeckoApi codegen scripts from `./scripts/src/api-codegen/apicodegen.ts` and related swaggers.

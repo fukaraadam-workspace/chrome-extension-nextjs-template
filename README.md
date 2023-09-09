@@ -1,4 +1,6 @@
-# Chrome Extension
+# Next.js Chrome Extension
+
+Example project for a chrome extension development with Next.js.
 
 ## Usage
 
@@ -33,9 +35,11 @@ Git lfs is used for storing binary files. VS Code is used for development. Prett
   - app-ui: Next.js app for UI.
   - extenion-specific: chrome extension specific files e.g. worker scripts and manifest.json.
   - extension-test-app: Next.js app to test extension related features.
+  - shared-lib: Shared library for all packages.
   - utility-scripts: Utility scripts to be used manually.
 
-## ToDos
+### Tag Conventions
 
-Additional todos will be specified inside project with \<ToDo> tag.
-\<Warning> tags should be handled carefully. Implies a bug or security issue.
+Todos will be specified inside project with `<ToDo>` tag and inside `ToDo` section of README.md files in each package.
+
+`<Warning>` tags and `Warning` sections should be handled carefully. Implies a bug or security issue.
