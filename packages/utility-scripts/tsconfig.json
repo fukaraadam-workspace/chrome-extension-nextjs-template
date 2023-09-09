@@ -1,5 +1,5 @@
 {
-  // Copied from nextjs tsconfig.json
+  // Copied from Next.js tsconfig.json
   "compilerOptions": {
     "target": "es5",
     "lib": ["dom", "dom.iterable", "esnext"],

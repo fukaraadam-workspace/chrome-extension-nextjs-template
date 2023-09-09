@@ -2,7 +2,7 @@
 
 ## Usage
 
-- Regular nextjs scripts can be used to run application as a web app. Run `npx http-server ./out` after build to serve static export.
+- Regular Next.js scripts can be used to run application as a web app. Run `npx http-server ./out` after build to serve static export.
 
 ## Structure
 
@@ -19,9 +19,9 @@ RTK Query will be used to interact with api, and its codegen package will be use
 ### Folder Structure
 
 - public: static files to be served directly.
-- src: source files for both client and server side. More info: [`NextJS folder structure`][NextJS Folder].
+- src: source files for both client and server side. More info: [`Next.js folder structure`][Next.js Folder].
   - app: app related files, layouts, pages etc.
-  - pages: NextJS pages. `./src/app` is not used for now.
+  - pages: Next.js pages. `./src/app` is not used for now.
   - assets: Images, fonts, etc.
   - components: components to use in client side. Module css files, React components, etc.
   - data: static data files to be used in general. ts, JSON, CSV etc.
@@ -49,4 +49,4 @@ Additional todos will be specified inside project with \<ToDo> tag.
 
 <!-- Links Used through document -->
 
-[NextJS Folder]: https://nextjs.org/docs/getting-started/project-structure
+[Next.js Folder]: https://nextjs.org/docs/getting-started/project-structure

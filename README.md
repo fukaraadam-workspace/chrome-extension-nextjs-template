@@ -30,9 +30,9 @@ Git lfs is used for storing binary files. VS Code is used for development. Prett
 ### Folder Structure
 
 - packages: Include all seperate packages.
-  - app-ui: NextJS app for UI.
+  - app-ui: Next.js app for UI.
   - extenion-specific: chrome extension specific files e.g. worker scripts and manifest.json.
-  - extension-test-app: NextJS app to test extension related features.
+  - extension-test-app: Next.js app to test extension related features.
   - utility-scripts: Utility scripts to be used manually.
 
 ## ToDos
