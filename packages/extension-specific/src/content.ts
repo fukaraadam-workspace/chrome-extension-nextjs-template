@@ -13,25 +13,23 @@ console.log('Content script loaded!');
  */
 
 // Listen for a custom event.
-window.addEventListener(PageEventType.CustomClick, function (event) {
-  chrome.runtime.sendMessage<typeof BGMessageType.CustomClick>(
-    { type: BGMessageType.CustomClick },
-    (response) => {
-      console.log(
-        `Background script responded to custom click with: ${response.data}`,
-      );
-    },
+window.addEventListener(PageEventType.CustomClick, async function (event) {
+  const response = await chrome.runtime.sendMessage<
+    typeof BGMessageType.CustomClick
+  >({ type: BGMessageType.CustomClick });
+
+  console.log(
+    `Background script responded to custom click with: ${response.data}`,
   );
 });
 
 // Listen for a custom event.
-window.addEventListener(PageEventType.AskConfirmation, function (event) {
-  chrome.runtime.sendMessage<typeof BGMessageType.AskConfirmation>(
-    { type: BGMessageType.AskConfirmation, ...event.detail },
-    (response) => {
-      console.log(`Background script opened popup: ${response.isPopupOpened}`);
-    },
-  );
+window.addEventListener(PageEventType.AskConfirmation, async function (event) {
+  const response = await chrome.runtime.sendMessage<
+    typeof BGMessageType.AskConfirmation
+  >({ type: BGMessageType.AskConfirmation, ...event.detail });
+
+  console.log(`Background script opened popup: ${response.isPopupOpened}`);
 });
 
 /**
