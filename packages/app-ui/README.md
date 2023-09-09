@@ -31,7 +31,6 @@ RTK Query will be used to interact with api, and its codegen package will be use
 
 Additional todos will be specified inside project with \<ToDo> tag.
 
-- [ ] Edit `./public/manifest.json`, maybe find a better way to separate extension parts from application.
 - [x] Add Redux toolkit
 - [x] Add RTK Query
 - [x] Add RTK Query codegen
