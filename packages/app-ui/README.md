@@ -5,6 +5,7 @@
 - Regular Next.js commands can be used to run application as a web app. Run `serve out` or `npx http-server ./out` after build to serve static export.
 - Api types can be automatically generated from swagger with `npm run utility:api-codegen` command.
 - Favicon can be generated with `npm run utility:icon-generator` command.
+- `BUILD_MODE=development` environment variable can be used to generate source map for build. `npm run build:dev` command is using this variable to set build mode.
 
 ## Structure
 

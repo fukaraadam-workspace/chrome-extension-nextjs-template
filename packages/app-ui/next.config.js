@@ -16,6 +16,7 @@ const nextConfig = {
 
   // Optional: Import packages from workspace
   transpilePackages: ['shared-lib'],
+  productionBrowserSourceMaps: process.env.BUILD_MODE === 'development',
 };
 
 module.exports = nextConfig;

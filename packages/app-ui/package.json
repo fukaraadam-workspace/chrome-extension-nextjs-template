@@ -4,6 +4,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "build:dev": "cross-env BUILD_MODE=development next build",
     "start": "next start",
     "serve": "serve out",
     "lint": "next lint"
@@ -21,6 +22,7 @@
     "@types/react": "18.2.21",
     "@types/react-dom": "18.2.7",
     "autoprefixer": "10.4.15",
+    "cross-env": "^7.0.3",
     "eslint": "8.48.0",
     "eslint-config-next": "13.4.19",
     "eslint-config-prettier": "^9.0.0",
