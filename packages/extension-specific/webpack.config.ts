@@ -68,7 +68,7 @@ var config: webpack.Configuration = {
 module.exports = (env: { [key: string]: string | undefined }) => {
   if (env.mode === 'development') {
     config.mode = 'development';
-    config.devtool = 'source-map';
+    config.devtool = 'inline-source-map';
   } else {
     config.mode = 'production';
     config.devtool = false;
