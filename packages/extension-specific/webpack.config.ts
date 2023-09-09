@@ -1,5 +1,4 @@
 import webpack from 'webpack';
-import { CleanWebpackPlugin } from 'clean-webpack-plugin';
 import CopyWebpackPlugin from 'copy-webpack-plugin';
 import * as path from 'path';
 
@@ -30,7 +29,6 @@ var config: webpack.Configuration = {
     extensions: ['.ts', '.js'],
   },
   plugins: [
-    new CleanWebpackPlugin({ verbose: false }),
     new webpack.ProgressPlugin(),
     new CopyWebpackPlugin({
       patterns: [
@@ -63,6 +61,7 @@ var config: webpack.Configuration = {
   output: {
     filename: '[name].js',
     path: path.resolve(__dirname, 'out'),
+    clean: true,
   },
 };
 
