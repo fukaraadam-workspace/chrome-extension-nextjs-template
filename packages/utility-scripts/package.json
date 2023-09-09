@@ -2,6 +2,7 @@
   "name": "utility-scripts",
   "version": "0.1.0",
   "scripts": {
+    "bundle-extension:clean": "ts-node ./src/bundle-extension/bundle-extension-clean.ts",
     "bundle-extension:ui": "ts-node ./src/bundle-extension/bundle-extension-ui.ts",
     "bundle-extension:specific": "ts-node ./src/bundle-extension/bundle-extension-specific.ts",
     "api-codegen": "ts-node ./src/api-codegen/api-codegen.ts",
