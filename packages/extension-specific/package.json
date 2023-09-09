@@ -4,10 +4,12 @@
   "scripts": {
     "build": "webpack"
   },
+  "dependencies": {
+    "shared-lib": "^0.1.0"
+  },
   "devDependencies": {
     "clean-webpack-plugin": "^4.0.0",
     "copy-webpack-plugin": "^11.0.0",
-    "shared-lib": "*",
     "ts-loader": "^9.4.4",
     "typescript": "^5.2.2",
     "webpack": "^5.88.2",
