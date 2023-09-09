@@ -15,6 +15,7 @@
     "isolatedModules": false, // Output to single file. Changed from true to false
     "jsx": "preserve",
     "incremental": true,
+    "sourceMap": true,
     "paths": {
       // Added paths
       "@/*": ["./src/*"]
