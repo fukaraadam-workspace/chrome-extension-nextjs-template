@@ -2,26 +2,30 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "Next.js: debug server-side",
+      "name": "app-ui: server-side debug",
       "type": "node-terminal",
       "request": "launch",
-      "command": "npm run dev --workspace=app-ui"
+      "command": "npm run dev",
+      "cwd": "${workspaceRoot}/packages/app-ui"
     },
     {
-      "name": "Next.js: debug client-side",
+      "name": "app-ui: client-side debug",
       "type": "chrome",
       "request": "launch",
-      "url": "http://localhost:3000"
+      "url": "http://localhost:3000",
+      "webRoot": "${workspaceFolder}/packages/app-ui"
     },
     {
-      "name": "Next.js: debug full stack",
+      "name": "app-ui: full stack debug",
       "type": "node-terminal",
       "request": "launch",
-      "command": "npm run dev --workspace=app-ui",
+      "command": "npm run dev",
+      "cwd": "${workspaceRoot}/packages/app-ui",
       "serverReadyAction": {
         "pattern": "started server on .+, url: (https?://.+)",
         "uriFormat": "%s",
-        "action": "debugWithChrome"
+        "action": "debugWithChrome",
+        "webRoot": "${workspaceFolder}/packages/app-ui"
       }
     }
   ]
