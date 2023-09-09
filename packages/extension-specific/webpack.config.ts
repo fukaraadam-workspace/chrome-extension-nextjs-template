@@ -3,19 +3,15 @@ import { CleanWebpackPlugin } from 'clean-webpack-plugin';
 import CopyWebpackPlugin from 'copy-webpack-plugin';
 import * as path from 'path';
 
-module.exports = {
+var config: webpack.Configuration = {
   entry: {
     content: './src/content.ts',
     background: './src/background.ts',
   },
-  mode: 'production',
-  resolve: {
-    extensions: ['.ts', '.js'],
-  },
   module: {
     rules: [
       {
-        test: /\.(ts|tsx)$/,
+        test: /\.(ts)$/,
         use: [
           {
             loader: 'ts-loader',
@@ -29,6 +25,9 @@ module.exports = {
         exclude: /node_modules/,
       },
     ],
+  },
+  resolve: {
+    extensions: ['.ts', '.js'],
   },
   plugins: [
     new CleanWebpackPlugin({ verbose: false }),
@@ -65,4 +64,15 @@ module.exports = {
     filename: '[name].js',
     path: path.resolve(__dirname, 'out'),
   },
+};
+
+module.exports = (env: { [key: string]: string | undefined }) => {
+  if (env.mode === 'development') {
+    config.mode = 'development';
+    config.devtool = 'source-map';
+  } else {
+    config.mode = 'production';
+    config.devtool = false;
+  }
+  return config;
 };

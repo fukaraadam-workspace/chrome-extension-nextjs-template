@@ -2,7 +2,8 @@
   "name": "extension-specific",
   "version": "0.1.0",
   "scripts": {
-    "build": "webpack"
+    "build": "webpack",
+    "build-dev": "webpack --env mode=development"
   },
   "dependencies": {
     "shared-lib": "^0.1.0"
