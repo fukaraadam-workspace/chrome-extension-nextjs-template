@@ -4,7 +4,6 @@
   "scripts": {
     "bundle-extension:clean": "ts-node ./src/bundle-extension/bundle-extension-clean.ts",
     "bundle-extension:ui": "ts-node ./src/bundle-extension/bundle-extension-ui.ts",
-    "bundle-extension:specific": "ts-node ./src/bundle-extension/bundle-extension-specific.ts",
     "api-codegen": "ts-node ./src/api-codegen/api-codegen.ts",
     "icon-generator": "ts-node ./src/icon-generator/icon-generator.ts"
   },
