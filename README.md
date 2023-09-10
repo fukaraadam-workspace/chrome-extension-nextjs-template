@@ -6,10 +6,18 @@ Example project for a chrome extension development with Next.js.
 
 Run all these commands from root directory.
 
+### Development
+
 - Firstly, Run `npm install`, this will install all dependencies for all workspaces.
-- Run `npm run build-extension` to build for chrome extension. Output will be in `./out` directory. Load output directory as unpacked extension in chrome (enable developer mode in extensions).
+- Run `npm run build-extension:dev` to build for chrome extension. Output will be in `./out` directory. Load output directory as unpacked extension in chrome (enable developer mode in extensions).
 - To test extension, run `npm run test`.
   - Open [http://localhost:3001](http://localhost:3001) with your browser to see the result. 3000 is reserved for app-ui development.
+- For UI changes, run `npm run build-extension:ui:dev` no need to refresh extension, just reopen popup
+- For extension-specific changes, it will automatically build again, just reload extension. For content script changes, you need to reload page.
+
+### Production
+
+- Run `npm run build-extension` to build for production. It will minify code and disable source map. Output will be in `./out` directory.
 
 ### Utility Commands
 

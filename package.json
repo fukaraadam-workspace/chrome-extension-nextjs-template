@@ -10,7 +10,10 @@
     "build": "npm run build --workspaces --if-present",
     "build-extension": "npm run bundle-extension:clean --workspace=utility-scripts && npm run build-extension:ui && npm run build-extension:specific",
     "build-extension:ui": "npm run build --workspace=app-ui && npm run bundle-extension:ui --workspace=utility-scripts",
-    "build-extension:specific": "npm run build --workspace=extension-specific && npm run bundle-extension:specific --workspace=utility-scripts",
+    "build-extension:specific": "npm run build --workspace=extension-specific",
+    "build-extension:dev": "npm run bundle-extension:clean --workspace=utility-scripts && npm run build-extension:ui:dev && npm run build-extension:specific:dev",
+    "build-extension:ui:dev": "npm run build:dev --workspace=app-ui && npm run bundle-extension:ui --workspace=utility-scripts",
+    "build-extension:specific:dev": "npm run build:dev --workspace=extension-specific",
     "utility:api-codegen": "npm run api-codegen --workspace=utility-scripts",
     "utility:icon-generator": "npm run icon-generator --workspace=utility-scripts"
   },

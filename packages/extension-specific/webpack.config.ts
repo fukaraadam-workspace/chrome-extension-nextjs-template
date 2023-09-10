@@ -34,7 +34,7 @@ var config: webpack.Configuration = {
       patterns: [
         {
           from: 'public',
-          to: path.join(__dirname, 'out'),
+          to: path.join(__dirname, '../../out'),
           force: true,
         },
       ],
@@ -43,7 +43,7 @@ var config: webpack.Configuration = {
       patterns: [
         {
           from: 'public/manifest.json',
-          to: path.join(__dirname, 'out'),
+          to: path.join(__dirname, '../../out'),
           force: true,
           transform: function (content, path) {
             // generates the manifest file using the package.json informations
@@ -60,8 +60,7 @@ var config: webpack.Configuration = {
   ],
   output: {
     filename: '[name].js',
-    path: path.resolve(__dirname, 'out'),
-    clean: true,
+    path: path.resolve(__dirname, '../../out'),
   },
 };
 
